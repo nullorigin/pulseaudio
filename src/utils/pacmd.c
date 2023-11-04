@@ -48,38 +48,38 @@ static void help(const char *argv0) {
     printf("%s %s\n",    argv0, "list-(sink-inputs|source-outputs)");
     printf("%s %s\n",    argv0, "stat");
     printf("%s %s\n",    argv0, "info");
-    printf("%s %s %s\n", argv0, "load-module", _("NAME [ARGS ...]"));
-    printf("%s %s %s\n", argv0, "unload-module", _("NAME|#N"));
-    printf("%s %s %s\n", argv0, "describe-module", _("NAME"));
-    printf("%s %s %s\n", argv0, "set-(sink|source)-volume", _("NAME|#N VOLUME"));
-    printf("%s %s %s\n", argv0, "set-(sink-input|source-output)-volume", _("#N VOLUME"));
-    printf("%s %s %s\n", argv0, "set-(sink|source)-mute", _("NAME|#N 1|0"));
-    printf("%s %s %s\n", argv0, "set-(sink-input|source-output)-mute", _("#N 1|0"));
-    printf("%s %s %s\n", argv0, "update-(sink|source)-proplist", _("NAME|#N KEY=VALUE"));
-    printf("%s %s %s\n", argv0, "update-(sink-input|source-output)-proplist", _("#N KEY=VALUE"));
-    printf("%s %s %s\n", argv0, "set-default-(sink|source)", _("NAME|#N"));
-    printf("%s %s %s\n", argv0, "kill-(client|sink-input|source-output)", _("#N"));
-    printf("%s %s %s\n", argv0, "play-sample", _("NAME SINK|#N"));
-    printf("%s %s %s\n", argv0, "remove-sample", _("NAME"));
-    printf("%s %s %s\n", argv0, "load-sample", _("NAME FILENAME"));
-    printf("%s %s %s\n", argv0, "load-sample-lazy", _("NAME FILENAME"));
-    printf("%s %s %s\n", argv0, "load-sample-dir-lazy", _("PATHNAME"));
-    printf("%s %s %s\n", argv0, "play-file", _("FILENAME SINK|#N"));
+    printf("%s %s %s\n", argv0, "load-module", ("NAME [ARGS ...]"));
+    printf("%s %s %s\n", argv0, "unload-module", ("NAME|#N"));
+    printf("%s %s %s\n", argv0, "describe-module", ("NAME"));
+    printf("%s %s %s\n", argv0, "set-(sink|source)-volume", ("NAME|#N VOLUME"));
+    printf("%s %s %s\n", argv0, "set-(sink-input|source-output)-volume", ("#N VOLUME"));
+    printf("%s %s %s\n", argv0, "set-(sink|source)-mute", ("NAME|#N 1|0"));
+    printf("%s %s %s\n", argv0, "set-(sink-input|source-output)-mute", ("#N 1|0"));
+    printf("%s %s %s\n", argv0, "update-(sink|source)-proplist", ("NAME|#N KEY=VALUE"));
+    printf("%s %s %s\n", argv0, "update-(sink-input|source-output)-proplist", ("#N KEY=VALUE"));
+    printf("%s %s %s\n", argv0, "set-default-(sink|source)", ("NAME|#N"));
+    printf("%s %s %s\n", argv0, "kill-(client|sink-input|source-output)", ("#N"));
+    printf("%s %s %s\n", argv0, "play-sample", ("NAME SINK|#N"));
+    printf("%s %s %s\n", argv0, "remove-sample", ("NAME"));
+    printf("%s %s %s\n", argv0, "load-sample", ("NAME FILENAME"));
+    printf("%s %s %s\n", argv0, "load-sample-lazy", ("NAME FILENAME"));
+    printf("%s %s %s\n", argv0, "load-sample-dir-lazy", ("PATHNAME"));
+    printf("%s %s %s\n", argv0, "play-file", ("FILENAME SINK|#N"));
     printf("%s %s\n",    argv0, "dump");
-    printf("%s %s %s\n", argv0, "move-(sink-input|source-output)", _("#N SINK|SOURCE"));
-    printf("%s %s %s\n", argv0, "suspend-(sink|source)", _("NAME|#N 1|0"));
-    printf("%s %s %s\n", argv0, "suspend", _("1|0"));
-    printf("%s %s %s\n", argv0, "set-card-profile", _("CARD PROFILE"));
-    printf("%s %s %s\n", argv0, "set-(sink|source)-port", _("NAME|#N PORT"));
-    printf("%s %s %s\n", argv0, "set-port-latency-offset", _("CARD-NAME|CARD-#N PORT OFFSET"));
-    printf("%s %s %s\n", argv0, "set-log-target", _("TARGET"));
-    printf("%s %s %s\n", argv0, "set-log-level", _("NUMERIC-LEVEL"));
-    printf("%s %s %s\n", argv0, "set-log-meta", _("1|0"));
-    printf("%s %s %s\n", argv0, "set-log-time", _("1|0"));
-    printf("%s %s %s\n", argv0, "set-log-backtrace", _("FRAMES"));
-    printf("%s %s %s\n", argv0, "send-message", _("RECIPIENT MESSAGE [MESSAGE_PARAMETERS]"));
+    printf("%s %s %s\n", argv0, "move-(sink-input|source-output)", ("#N SINK|SOURCE"));
+    printf("%s %s %s\n", argv0, "suspend-(sink|source)", ("NAME|#N 1|0"));
+    printf("%s %s %s\n", argv0, "suspend", ("1|0"));
+    printf("%s %s %s\n", argv0, "set-card-profile", ("CARD PROFILE"));
+    printf("%s %s %s\n", argv0, "set-(sink|source)-port", ("NAME|#N PORT"));
+    printf("%s %s %s\n", argv0, "set-port-latency-offset", ("CARD-NAME|CARD-#N PORT OFFSET"));
+    printf("%s %s %s\n", argv0, "set-log-target", ("TARGET"));
+    printf("%s %s %s\n", argv0, "set-log-level", ("NUMERIC-LEVEL"));
+    printf("%s %s %s\n", argv0, "set-log-meta", ("1|0"));
+    printf("%s %s %s\n", argv0, "set-log-time", ("1|0"));
+    printf("%s %s %s\n", argv0, "set-log-backtrace", ("FRAMES"));
+    printf("%s %s %s\n", argv0, "send-message", ("RECIPIENT MESSAGE [MESSAGE_PARAMETERS]"));
 
-    printf(_("\n"
+    printf(("\n"
          "  -h, --help                            Show this help\n"
          "      --version                         Show version\n"
          "When no command is given pacmd starts in the interactive mode.\n" ));
@@ -113,9 +113,6 @@ int main(int argc, char*argv[]) {
     };
 
     setlocale(LC_ALL, "");
-#ifdef ENABLE_NLS
-    bindtextdomain(GETTEXT_PACKAGE, PULSE_LOCALEDIR);
-#endif
 
     bn = pa_path_get_filename(argv[0]);
 
@@ -126,7 +123,7 @@ int main(int argc, char*argv[]) {
                 ret = 0;
                 goto quit;
             case ARG_VERSION:
-                printf(_("pacmd %s\n"
+                printf(("pacmd %s\n"
                          "Compiled with libpulse %s\n"
                          "Linked with libpulse %s\n"),
                        PACKAGE_VERSION,
@@ -140,12 +137,12 @@ int main(int argc, char*argv[]) {
     }
 
     if (pa_pid_file_check_running(&pid, "pulseaudio") < 0) {
-        pa_log(_("No PulseAudio daemon running, or not running as session daemon."));
+        pa_log(("No PulseAudio daemon running, or not running as session daemon."));
         goto quit;
     }
 
     if ((fd = pa_socket_cloexec(PF_UNIX, SOCK_STREAM, 0)) < 0) {
-        pa_log(_("socket(PF_UNIX, SOCK_STREAM, 0): %s"), strerror(errno));
+        pa_log(("socket(PF_UNIX, SOCK_STREAM, 0): %s"), strerror(errno));
         goto quit;
     }
 
@@ -162,7 +159,7 @@ int main(int argc, char*argv[]) {
         int r;
 
         if ((r = connect(fd, (struct sockaddr*) &sa, sizeof(sa))) < 0 && (errno != ECONNREFUSED && errno != ENOENT)) {
-            pa_log(_("connect(): %s"), strerror(errno));
+            pa_log(("connect(): %s"), strerror(errno));
             goto quit;
         }
 
@@ -170,7 +167,7 @@ int main(int argc, char*argv[]) {
             break;
 
         if (pa_pid_file_kill(SIGUSR2, NULL, "pulseaudio") < 0) {
-            pa_log(_("Failed to kill PulseAudio daemon."));
+            pa_log(("Failed to kill PulseAudio daemon."));
             goto quit;
         }
 
@@ -178,7 +175,7 @@ int main(int argc, char*argv[]) {
     }
 
     if (i >= 5) {
-        pa_log(_("Daemon not responding."));
+        pa_log(("Daemon not responding."));
         goto quit;
     }
 
@@ -210,7 +207,7 @@ int main(int argc, char*argv[]) {
     if (!ibuf_eof && isatty(STDIN_FILENO)) {
         /* send hello to enable interactive mode (welcome message, prompt) */
         if (pa_write(fd, "hello\n", 6, &fd_type) < 0) {
-            pa_log(_("write(): %s"), strerror(errno));
+            pa_log(("write(): %s"), strerror(errno));
             goto quit;
         }
     }
@@ -266,7 +263,7 @@ int main(int argc, char*argv[]) {
             if (errno == EINTR)
                 continue;
 
-            pa_log(_("poll(): %s"), strerror(errno));
+            pa_log(("poll(): %s"), strerror(errno));
             goto quit;
         }
 
@@ -277,7 +274,7 @@ int main(int argc, char*argv[]) {
 
                 if ((r = pa_read(STDIN_FILENO, ibuf, ibuf_size, &stdin_type)) <= 0) {
                     if (r < 0) {
-                        pa_log(_("read(): %s"), strerror(errno));
+                        pa_log(("read(): %s"), strerror(errno));
                         goto quit;
                     }
 
@@ -297,7 +294,7 @@ int main(int argc, char*argv[]) {
 
                 if ((r = pa_read(fd, obuf, obuf_size, &fd_type)) <= 0) {
                     if (r < 0) {
-                        pa_log(_("read(): %s"), strerror(errno));
+                        pa_log(("read(): %s"), strerror(errno));
                         goto quit;
                     }
 
@@ -319,7 +316,7 @@ int main(int argc, char*argv[]) {
                 pa_assert(obuf_length > 0);
 
                 if ((r = pa_write(STDOUT_FILENO, obuf + obuf_index, obuf_length, &stdout_type)) < 0) {
-                    pa_log(_("write(): %s"), strerror(errno));
+                    pa_log(("write(): %s"), strerror(errno));
                     goto quit;
                 }
 
@@ -337,7 +334,7 @@ int main(int argc, char*argv[]) {
                 pa_assert(ibuf_length > 0);
 
                 if ((r = pa_write(fd, ibuf + ibuf_index, ibuf_length, &fd_type)) < 0) {
-                    pa_log(_("write(): %s"), strerror(errno));
+                    pa_log(("write(): %s"), strerror(errno));
                     goto quit;
                 }
 

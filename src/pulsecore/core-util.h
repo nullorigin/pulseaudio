@@ -94,7 +94,7 @@ static inline const char *pa_yes_no(bool b) {
 }
 
 static inline const char *pa_yes_no_localised(bool b) {
-    return b ? _("yes") : _("no");
+    return b ? ("yes") : ("no");
 }
 
 static inline const char *pa_strnull(const char *x) {

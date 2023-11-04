@@ -180,7 +180,7 @@ static void complete_action(void) {
 static void stat_callback(pa_context *c, const pa_stat_info *i, void *userdata) {
     char s[PA_BYTES_SNPRINT_MAX];
     if (!i) {
-        pa_log(_("Failed to get statistics: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get statistics: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -196,19 +196,12 @@ static void stat_callback(pa_context *c, const pa_stat_info *i, void *userdata) 
                i->scache_size);
     } else {
         pa_bytes_snprint(s, sizeof(s), i->memblock_total_size);
-        printf(ngettext("Currently in use: %u block containing %s bytes total.\n",
-                        "Currently in use: %u blocks containing %s bytes total.\n",
-                        i->memblock_total),
-            i->memblock_total, s);
+        printf("Currently in use: %u block containing %s bytes total.\n", i->memblock_total);
 
         pa_bytes_snprint(s, sizeof(s), i->memblock_allocated_size);
-        printf(ngettext("Allocated during whole lifetime: %u block containing %s bytes total.\n",
-                        "Allocated during whole lifetime: %u blocks containing %s bytes total.\n",
-                        i->memblock_allocated),
-            i->memblock_allocated, s);
-
+        printf("Allocated during whole lifetime: %u block containing %s bytes total.\n",i->memblock_allocated);
         pa_bytes_snprint(s, sizeof(s), i->scache_size);
-        printf(_("Sample cache size: %s\n"), s);
+        printf(("Sample cache size: %s\n"), s);
     }
 
     complete_action();
@@ -216,24 +209,24 @@ static void stat_callback(pa_context *c, const pa_stat_info *i, void *userdata) 
 
 static void get_default_sink(pa_context *c, const pa_server_info *i, void *userdata) {
     if (!i) {
-        pa_log(_("Failed to get server information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get server information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
 
-    printf(_("%s\n"), i->default_sink_name);
+    printf(("%s\n"), i->default_sink_name);
 
     complete_action();
 }
 
 static void get_default_source(pa_context *c, const pa_server_info *i, void *userdata) {
     if (!i) {
-        pa_log(_("Failed to get server information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get server information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
 
-    printf(_("%s\n"), i->default_source_name);
+    printf(("%s\n"), i->default_source_name);
 
     complete_action();
 }
@@ -242,7 +235,7 @@ static void get_server_info_callback(pa_context *c, const pa_server_info *i, voi
     char ss[PA_SAMPLE_SPEC_SNPRINT_MAX], cm[PA_CHANNEL_MAP_SNPRINT_MAX];
 
     if (!i) {
-        pa_log(_("Failed to get server information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get server information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -278,7 +271,7 @@ static void get_server_info_callback(pa_context *c, const pa_server_info *i, voi
         pa_xfree(tile_size);
         pa_xfree(cookie);
     } else {
-        printf(_("Server String: %s\n"
+        printf(("Server String: %s\n"
              "Library Protocol Version: %u\n"
              "Server Protocol Version: %u\n"
              "Is Local: %s\n"
@@ -291,7 +284,7 @@ static void get_server_info_callback(pa_context *c, const pa_server_info *i, voi
              pa_context_get_index(c),
              pa_context_get_tile_size(c, NULL));
 
-        printf(_("User Name: %s\n"
+        printf(("User Name: %s\n"
                 "Host Name: %s\n"
                 "Server Name: %s\n"
                 "Server Version: %s\n"
@@ -317,9 +310,9 @@ static void get_server_info_callback(pa_context *c, const pa_server_info *i, voi
 
 static const char* get_available_str(int available) {
     switch (available) {
-        case PA_PORT_AVAILABLE_UNKNOWN: return _("availability unknown");
-        case PA_PORT_AVAILABLE_YES: return _("available");
-        case PA_PORT_AVAILABLE_NO: return _("not available");
+        case PA_PORT_AVAILABLE_UNKNOWN: return ("availability unknown");
+        case PA_PORT_AVAILABLE_YES: return ("available");
+        case PA_PORT_AVAILABLE_NO: return ("not available");
     }
 
     pa_assert_not_reached();
@@ -328,31 +321,31 @@ static const char* get_available_str(int available) {
 static const char* get_device_port_type(unsigned int type) {
     static char buf[32];
     switch (type) {
-    case PA_DEVICE_PORT_TYPE_UNKNOWN: return _("Unknown");
-    case PA_DEVICE_PORT_TYPE_AUX: return _("Aux");
-    case PA_DEVICE_PORT_TYPE_SPEAKER: return _("Speaker");
-    case PA_DEVICE_PORT_TYPE_HEADPHONES: return _("Headphones");
-    case PA_DEVICE_PORT_TYPE_LINE: return _("Line");
-    case PA_DEVICE_PORT_TYPE_MIC: return _("Mic");
-    case PA_DEVICE_PORT_TYPE_HEADSET: return _("Headset");
-    case PA_DEVICE_PORT_TYPE_HANDSET: return _("Handset");
-    case PA_DEVICE_PORT_TYPE_EARPIECE: return _("Earpiece");
-    case PA_DEVICE_PORT_TYPE_SPDIF: return _("SPDIF");
-    case PA_DEVICE_PORT_TYPE_HDMI: return _("HDMI");
-    case PA_DEVICE_PORT_TYPE_TV: return _("TV");
-    case PA_DEVICE_PORT_TYPE_RADIO: return _("Radio");
-    case PA_DEVICE_PORT_TYPE_VIDEO: return _("Video");
-    case PA_DEVICE_PORT_TYPE_USB: return _("USB");
-    case PA_DEVICE_PORT_TYPE_BLUETOOTH: return _("Bluetooth");
-    case PA_DEVICE_PORT_TYPE_PORTABLE: return _("Portable");
-    case PA_DEVICE_PORT_TYPE_HANDSFREE: return _("Handsfree");
-    case PA_DEVICE_PORT_TYPE_CAR: return _("Car");
-    case PA_DEVICE_PORT_TYPE_HIFI: return _("HiFi");
-    case PA_DEVICE_PORT_TYPE_PHONE: return _("Phone");
-    case PA_DEVICE_PORT_TYPE_NETWORK: return _("Network");
-    case PA_DEVICE_PORT_TYPE_ANALOG: return _("Analog");
+    case PA_DEVICE_PORT_TYPE_UNKNOWN: return ("Unknown");
+    case PA_DEVICE_PORT_TYPE_AUX: return ("Aux");
+    case PA_DEVICE_PORT_TYPE_SPEAKER: return ("Speaker");
+    case PA_DEVICE_PORT_TYPE_HEADPHONES: return ("Headphones");
+    case PA_DEVICE_PORT_TYPE_LINE: return ("Line");
+    case PA_DEVICE_PORT_TYPE_MIC: return ("Mic");
+    case PA_DEVICE_PORT_TYPE_HEADSET: return ("Headset");
+    case PA_DEVICE_PORT_TYPE_HANDSET: return ("Handset");
+    case PA_DEVICE_PORT_TYPE_EARPIECE: return ("Earpiece");
+    case PA_DEVICE_PORT_TYPE_SPDIF: return ("SPDIF");
+    case PA_DEVICE_PORT_TYPE_HDMI: return ("HDMI");
+    case PA_DEVICE_PORT_TYPE_TV: return ("TV");
+    case PA_DEVICE_PORT_TYPE_RADIO: return ("Radio");
+    case PA_DEVICE_PORT_TYPE_VIDEO: return ("Video");
+    case PA_DEVICE_PORT_TYPE_USB: return ("USB");
+    case PA_DEVICE_PORT_TYPE_BLUETOOTH: return ("Bluetooth");
+    case PA_DEVICE_PORT_TYPE_PORTABLE: return ("Portable");
+    case PA_DEVICE_PORT_TYPE_HANDSFREE: return ("Handsfree");
+    case PA_DEVICE_PORT_TYPE_CAR: return ("Car");
+    case PA_DEVICE_PORT_TYPE_HIFI: return ("HiFi");
+    case PA_DEVICE_PORT_TYPE_PHONE: return ("Phone");
+    case PA_DEVICE_PORT_TYPE_NETWORK: return ("Network");
+    case PA_DEVICE_PORT_TYPE_ANALOG: return ("Analog");
     }
-    snprintf(buf, sizeof(buf), "%s-%u", _("Unknown"), type);
+    snprintf(buf, sizeof(buf), "%s-%u", ("Unknown"), type);
     return buf;
 }
 
@@ -480,7 +473,7 @@ const char* pa_volume_to_json_object(pa_volume_t v, int print_dB) {
     pa_json_encoder *encoder = pa_json_encoder_new();
     if (!PA_VOLUME_IS_VALID(v)) {
         pa_json_encoder_begin_element_object(encoder);
-        pa_json_encoder_add_member_string(encoder, "error", _("(invalid)"));
+        pa_json_encoder_add_member_string(encoder, "error", ("(invalid)"));
         pa_json_encoder_end_object(encoder);
         return pa_json_encoder_to_string_free(encoder);
     }
@@ -501,7 +494,7 @@ const char* pa_cvolume_to_json_object(const pa_cvolume *c, const pa_channel_map 
     pa_json_encoder *encoder = pa_json_encoder_new();
     if (!pa_cvolume_valid(c)) {
         pa_json_encoder_begin_element_object(encoder);
-        pa_json_encoder_add_member_string(encoder, "error", _("(invalid)"));
+        pa_json_encoder_add_member_string(encoder, "error", ("(invalid)"));
         pa_json_encoder_end_object(encoder);
         return pa_json_encoder_to_string_free(encoder);
     }
@@ -564,7 +557,7 @@ static void get_sink_info_callback(pa_context *c, const pa_sink_info *i, int is_
     }
 
     if (is_last < 0) {
-        pa_log(_("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -661,7 +654,7 @@ static void get_sink_info_callback(pa_context *c, const pa_sink_info *i, int is_
         pa_xfree(latency_json_str);
         pa_xfree(flags_json_str);
     } else {
-        printf(_("Sink #%u\n"
+        printf(("Sink #%u\n"
              "\tState: %s\n"
              "\tName: %s\n"
              "\tDescription: %s\n"
@@ -703,22 +696,22 @@ static void get_sink_info_callback(pa_context *c, const pa_sink_info *i, int is_
         if (i->ports) {
             pa_sink_port_info **p;
 
-            printf(_("\tPorts:\n"));
+            printf(("\tPorts:\n"));
             for (p = i->ports; *p; p++)
-                printf(_("\t\t%s: %s (type: %s, priority: %u%s%s, %s)\n"),
+                printf(("\t\t%s: %s (type: %s, priority: %u%s%s, %s)\n"),
                         (*p)->name, (*p)->description, get_device_port_type((*p)->type),
-                        (*p)->priority, (*p)->availability_group ? _(", availability group: ") : "",
+                        (*p)->priority, (*p)->availability_group ? (", availability group: ") : "",
                         (*p)->availability_group ?: "", get_available_str((*p)->available));
         }
 
         if (i->active_port)
-            printf(_("\tActive Port: %s\n"),
+            printf(("\tActive Port: %s\n"),
                 i->active_port->name);
 
         if (i->formats) {
             uint8_t j;
 
-            printf(_("\tFormats:\n"));
+            printf(("\tFormats:\n"));
             for (j = 0; j < i->n_formats; j++)
                 printf("\t\t%s\n", pa_format_info_snprint(f, sizeof(f), i->formats[j]));
         }
@@ -750,7 +743,7 @@ static void get_source_info_callback(pa_context *c, const pa_source_info *i, int
     }
 
     if (is_last < 0) {
-        pa_log(_("Failed to get source information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get source information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -846,7 +839,7 @@ static void get_source_info_callback(pa_context *c, const pa_source_info *i, int
         pa_xfree(latency_json_str);
         pa_xfree(flags_json_str);
     } else {
-        printf(_("Source #%u\n"
+        printf(("Source #%u\n"
                 "\tState: %s\n"
                 "\tName: %s\n"
                 "\tDescription: %s\n"
@@ -874,7 +867,7 @@ static void get_source_info_callback(pa_context *c, const pa_source_info *i, int
             pa_cvolume_snprint_verbose(cv, sizeof(cv), &i->volume, &i->channel_map, i->flags & PA_SOURCE_DECIBEL_VOLUME),
             volume_balance,
             pa_volume_snprint_verbose(v, sizeof(v), i->base_volume, i->flags & PA_SOURCE_DECIBEL_VOLUME),
-            i->monitor_of_sink_name ? i->monitor_of_sink_name : _("n/a"),
+            i->monitor_of_sink_name ? i->monitor_of_sink_name : ("n/a"),
             (double) i->latency, (double) i->configured_latency,
             i->flags & PA_SOURCE_HARDWARE ? "HARDWARE " : "",
             i->flags & PA_SOURCE_NETWORK ? "NETWORK " : "",
@@ -887,22 +880,22 @@ static void get_source_info_callback(pa_context *c, const pa_source_info *i, int
         if (i->ports) {
             pa_source_port_info **p;
 
-            printf(_("\tPorts:\n"));
+            printf(("\tPorts:\n"));
             for (p = i->ports; *p; p++)
-                printf(_("\t\t%s: %s (type: %s, priority: %u%s%s, %s)\n"),
+                printf(("\t\t%s: %s (type: %s, priority: %u%s%s, %s)\n"),
                         (*p)->name, (*p)->description, get_device_port_type((*p)->type),
-                        (*p)->priority, (*p)->availability_group ? _(", availability group: ") : "",
+                        (*p)->priority, (*p)->availability_group ? (", availability group: ") : "",
                         (*p)->availability_group ?: "", get_available_str((*p)->available));
         }
 
         if (i->active_port)
-            printf(_("\tActive Port: %s\n"),
+            printf(("\tActive Port: %s\n"),
                 i->active_port->name);
 
         if (i->formats) {
             uint8_t j;
 
-            printf(_("\tFormats:\n"));
+            printf(("\tFormats:\n"));
             for (j = 0; j < i->n_formats; j++)
                 printf("\t\t%s\n", pa_format_info_snprint(f, sizeof(f), i->formats[j]));
         }
@@ -921,7 +914,7 @@ static void get_module_info_callback(pa_context *c, const pa_module_info *i, int
     }
 
     if (is_last < 0) {
-        pa_log(_("Failed to get module information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get module information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -959,7 +952,7 @@ static void get_module_info_callback(pa_context *c, const pa_module_info *i, int
         return;
     }
 
-    char *n_used = i->n_used != PA_INVALID_INDEX ? t : _("n/a");
+    char *n_used = i->n_used != PA_INVALID_INDEX ? t : ("n/a");
     if (format == JSON) {
         pa_json_encoder *encoder = pa_json_encoder_new();
         pa_json_encoder_begin_element_object(encoder);
@@ -973,7 +966,7 @@ static void get_module_info_callback(pa_context *c, const pa_module_info *i, int
         pa_json_encoder_add_element_raw_json(json_encoder, json_str);
         pa_xfree(json_str);
     } else {
-        printf(_("Module #%u\n"
+        printf(("Module #%u\n"
                 "\tName: %s\n"
                 "\tArgument: %s\n"
                 "\tUsage counter: %s\n"
@@ -999,7 +992,7 @@ static void get_client_info_callback(pa_context *c, const pa_client_info *i, int
     }
 
     if (is_last < 0) {
-        pa_log(_("Failed to get client information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get client information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1053,13 +1046,13 @@ static void get_client_info_callback(pa_context *c, const pa_client_info *i, int
             pa_json_encoder_add_element_raw_json(json_encoder, json_str);
             pa_xfree(json_str);
         } else {
-            printf(_("Client #%u\n"
+            printf(("Client #%u\n"
                 "\tDriver: %s\n"
                 "\tOwner Module: %s\n"
                 "\tProperties:\n\t\t%s\n"),
                 i->index,
                 pa_strnull(i->driver),
-                i->owner_module != PA_INVALID_INDEX ? t : _("n/a"),
+                i->owner_module != PA_INVALID_INDEX ? t : ("n/a"),
                 pl = pa_proplist_to_string_sep(i->proplist, "\n\t\t"));
         }
     }
@@ -1165,7 +1158,7 @@ static void get_card_info_callback(pa_context *c, const pa_card_info *i, int is_
     }
 
     if (is_last < 0) {
-        pa_log(_("Failed to get card information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get card information: %s"), pa_strerror(pa_context_errno(c)));
         complete_action();
         return;
     }
@@ -1221,7 +1214,7 @@ static void get_card_info_callback(pa_context *c, const pa_card_info *i, int is_
         pa_json_encoder_add_element_raw_json(json_encoder, json_str);
         pa_xfree(json_str);
     } else {
-        printf(_("Card #%u\n"
+        printf(("Card #%u\n"
              "\tName: %s\n"
              "\tDriver: %s\n"
              "\tOwner Module: %s\n"
@@ -1229,40 +1222,40 @@ static void get_card_info_callback(pa_context *c, const pa_card_info *i, int is_
             i->index,
             i->name,
             pa_strnull(i->driver),
-            i->owner_module != PA_INVALID_INDEX ? t : _("n/a"),
+            i->owner_module != PA_INVALID_INDEX ? t : ("n/a"),
             pl = pa_proplist_to_string_sep(i->proplist, "\n\t\t"));
 
         if (i->n_profiles > 0) {
             pa_card_profile_info2 **p;
 
-            printf(_("\tProfiles:\n"));
+            printf(("\tProfiles:\n"));
             for (p = i->profiles2; *p; p++)
-                printf(_("\t\t%s: %s (sinks: %u, sources: %u, priority: %u, available: %s)\n"), (*p)->name,
+                printf(("\t\t%s: %s (sinks: %u, sources: %u, priority: %u, available: %s)\n"), (*p)->name,
                     (*p)->description, (*p)->n_sinks, (*p)->n_sources, (*p)->priority, pa_yes_no_localised((*p)->available));
         }
 
         if (i->active_profile)
-            printf(_("\tActive Profile: %s\n"),
+            printf(("\tActive Profile: %s\n"),
                 i->active_profile->name);
 
         if (i->ports) {
             pa_card_port_info **p;
 
-            printf(_("\tPorts:\n"));
+            printf(("\tPorts:\n"));
             for (p = i->ports; *p; p++) {
                 pa_card_profile_info **pr = (*p)->profiles;
-                printf(_("\t\t%s: %s (type: %s, priority: %u, latency offset: %" PRId64 " usec%s%s, %s)\n"), (*p)->name,
+                printf(("\t\t%s: %s (type: %s, priority: %u, latency offset: %" PRId64 " usec%s%s, %s)\n"), (*p)->name,
                     (*p)->description, get_device_port_type((*p)->type), (*p)->priority, (*p)->latency_offset,
-                    (*p)->availability_group ? _(", availability group: ") : "", (*p)->availability_group ?: "",
+                    (*p)->availability_group ? (", availability group: ") : "", (*p)->availability_group ?: "",
                     get_available_str((*p)->available));
 
                 if (!pa_proplist_isempty((*p)->proplist)) {
                     pa_xfree(pl);
-                    printf(_("\t\t\tProperties:\n\t\t\t\t%s\n"), pl = pa_proplist_to_string_sep((*p)->proplist, "\n\t\t\t\t"));
+                    printf(("\t\t\tProperties:\n\t\t\t\t%s\n"), pl = pa_proplist_to_string_sep((*p)->proplist, "\n\t\t\t\t"));
                 }
 
                 if (pr) {
-                    printf(_("\t\t\tPart of profile(s): %s"), pa_strnull((*pr)->name));
+                    printf(("\t\t\tPart of profile(s): %s"), pa_strnull((*pr)->name));
                     pr++;
                     while (*pr) {
                         printf(", %s", pa_strnull((*pr)->name));
@@ -1287,7 +1280,7 @@ static void get_sink_input_info_callback(pa_context *c, const pa_sink_input_info
     }
 
     if (is_last < 0) {
-        pa_log(_("Failed to get sink input information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get sink input information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1363,7 +1356,7 @@ static void get_sink_input_info_callback(pa_context *c, const pa_sink_input_info
         pa_json_encoder_add_element_raw_json(json_encoder, json_str);
         pa_xfree(json_str);
     } else {
-        printf(_("Sink Input #%u\n"
+        printf(("Sink Input #%u\n"
              "\tDriver: %s\n"
              "\tOwner Module: %s\n"
              "\tClient: %s\n"
@@ -1381,8 +1374,8 @@ static void get_sink_input_info_callback(pa_context *c, const pa_sink_input_info
              "\tProperties:\n\t\t%s\n"),
            i->index,
            pa_strnull(i->driver),
-           i->owner_module != PA_INVALID_INDEX ? t : _("n/a"),
-           i->client != PA_INVALID_INDEX ? k : _("n/a"),
+           i->owner_module != PA_INVALID_INDEX ? t : ("n/a"),
+           i->client != PA_INVALID_INDEX ? k : ("n/a"),
            i->sink,
            sample_spec,
            channel_map,
@@ -1393,7 +1386,7 @@ static void get_sink_input_info_callback(pa_context *c, const pa_sink_input_info
            balance,
            (double) i->buffer_usec,
            (double) i->sink_usec,
-           i->resample_method ? i->resample_method : _("n/a"),
+           i->resample_method ? i->resample_method : ("n/a"),
            pl = pa_proplist_to_string_sep(i->proplist, "\n\t\t"));
     }
 
@@ -1410,7 +1403,7 @@ static void get_source_output_info_callback(pa_context *c, const pa_source_outpu
     }
 
     if (is_last < 0) {
-        pa_log(_("Failed to get source output information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get source output information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1486,7 +1479,7 @@ static void get_source_output_info_callback(pa_context *c, const pa_source_outpu
         pa_json_encoder_add_element_raw_json(json_encoder, json_str);
         pa_xfree(json_str);
     } else {
-        printf(_("Source Output #%u\n"
+        printf(("Source Output #%u\n"
              "\tDriver: %s\n"
              "\tOwner Module: %s\n"
              "\tClient: %s\n"
@@ -1504,8 +1497,8 @@ static void get_source_output_info_callback(pa_context *c, const pa_source_outpu
              "\tProperties:\n\t\t%s\n"),
            i->index,
            pa_strnull(i->driver),
-           i->owner_module != PA_INVALID_INDEX ? t : _("n/a"),
-           i->client != PA_INVALID_INDEX ? k : _("n/a"),
+           i->owner_module != PA_INVALID_INDEX ? t : ("n/a"),
+           i->client != PA_INVALID_INDEX ? k : ("n/a"),
            i->source,
            sample_spec,
            channel_map,
@@ -1516,7 +1509,7 @@ static void get_source_output_info_callback(pa_context *c, const pa_source_outpu
            balance,
            (double) i->buffer_usec,
            (double) i->source_usec,
-           i->resample_method ? i->resample_method : _("n/a"),
+           i->resample_method ? i->resample_method : ("n/a"),
            pl = pa_proplist_to_string_sep(i->proplist, "\n\t\t"));
     }
 
@@ -1533,7 +1526,7 @@ static void get_sample_info_callback(pa_context *c, const pa_sample_info *i, int
     }
 
     if (is_last < 0) {
-        pa_log(_("Failed to get sample information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get sample information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1554,7 +1547,7 @@ static void get_sample_info_callback(pa_context *c, const pa_sample_info *i, int
 
     pa_bytes_snprint(t, sizeof(t), i->bytes);
 
-    char *sample_spec = pa_sample_spec_valid(&i->sample_spec) ? pa_sample_spec_snprint(s, sizeof(s), &i->sample_spec) : short_list_format ? "-" : _("n/a");
+    char *sample_spec = pa_sample_spec_valid(&i->sample_spec) ? pa_sample_spec_snprint(s, sizeof(s), &i->sample_spec) : short_list_format ? "-" : ("n/a");
     double duration = (double) i->duration/1000000.0;
     if (short_list_format) {
         if (format == JSON) {
@@ -1579,7 +1572,7 @@ static void get_sample_info_callback(pa_context *c, const pa_sample_info *i, int
         return;
     }
 
-    char *channel_map = pa_sample_spec_valid(&i->sample_spec) ? pa_channel_map_snprint(cm, sizeof(cm), &i->channel_map) : _("n/a");
+    char *channel_map = pa_sample_spec_valid(&i->sample_spec) ? pa_channel_map_snprint(cm, sizeof(cm), &i->channel_map) : ("n/a");
     float balance = pa_cvolume_get_balance(&i->volume, &i->channel_map);
     if (format == JSON) {
         pa_json_encoder *encoder = pa_json_encoder_new();
@@ -1601,7 +1594,7 @@ static void get_sample_info_callback(pa_context *c, const pa_sample_info *i, int
         pa_json_encoder_add_element_raw_json(json_encoder, json_str);
         pa_xfree(json_str);
     } else {
-        printf(_("Sample #%u\n"
+        printf(("Sample #%u\n"
              "\tName: %s\n"
              "\tSample Specification: %s\n"
              "\tChannel Map: %s\n"
@@ -1621,7 +1614,7 @@ static void get_sample_info_callback(pa_context *c, const pa_sample_info *i, int
            duration,
            t,
            pa_yes_no_localised(i->lazy),
-           i->filename ? i->filename : _("n/a"),
+           i->filename ? i->filename : ("n/a"),
            pl = pa_proplist_to_string_sep(i->proplist, "\n\t\t"));
     }
 
@@ -1630,7 +1623,7 @@ static void get_sample_info_callback(pa_context *c, const pa_sample_info *i, int
 
 static void simple_callback(pa_context *c, int success, void *userdata) {
     if (!success) {
-        pa_log(_("Failure: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failure: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1640,7 +1633,7 @@ static void simple_callback(pa_context *c, int success, void *userdata) {
 
 static void index_callback(pa_context *c, uint32_t idx, void *userdata) {
     if (idx == PA_INVALID_INDEX) {
-        pa_log(_("Failure: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failure: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1664,7 +1657,7 @@ static void index_callback(pa_context *c, uint32_t idx, void *userdata) {
 static void send_message_callback(pa_context *c, int success, char *response, void *userdata) {
 
     if (!success) {
-        pa_log(_("Send message failed: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Send message failed: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1692,7 +1685,7 @@ static void list_handlers_callback(pa_context *c, int success, char *response, v
     const pa_json_object *v, *path, *description;
 
     if (!success) {
-        pa_log(_("list-handlers message failed: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("list-handlers message failed: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1708,14 +1701,14 @@ static void list_handlers_callback(pa_context *c, int success, char *response, v
     o = pa_json_parse(response);
 
     if (!o) {
-        pa_log(_("list-handlers message response could not be parsed correctly"));
+        pa_log(("list-handlers message response could not be parsed correctly"));
         pa_json_object_free(o);
         quit(1);
         return;
     }
 
     if (pa_json_object_get_type(o) != PA_JSON_TYPE_ARRAY) {
-        pa_log(_("list-handlers message response is not a JSON array"));
+        pa_log(("list-handlers message response is not a JSON array"));
         pa_json_object_free(o);
         quit(1);
         return;
@@ -1726,7 +1719,7 @@ static void list_handlers_callback(pa_context *c, int success, char *response, v
     for (i = 0; i < pa_json_object_get_array_length(o); ++i) {
         v = pa_json_object_get_array_member(o, i);
         if (pa_json_object_get_type(v) != PA_JSON_TYPE_OBJECT) {
-            pa_log(_("list-handlers message response array element %d is not a JSON object"), i);
+            pa_log(("list-handlers message response array element %d is not a JSON object"), i);
             err = -1;
             break;
         }
@@ -1757,7 +1750,7 @@ static void list_handlers_callback(pa_context *c, int success, char *response, v
     }
 
     if (err < 0) {
-        pa_log(_("list-handlers message response could not be parsed correctly"));
+        pa_log(("list-handlers message response could not be parsed correctly"));
         pa_json_object_free(o);
         quit(1);
         return;
@@ -1790,14 +1783,14 @@ static void unload_module_by_name_callback(pa_context *c, const pa_module_info *
     static bool unloaded = false;
 
     if (is_last < 0) {
-        pa_log(_("Failed to get module information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get module information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
 
     if (is_last) {
         if (unloaded == false)
-            pa_log(_("Failed to unload module: Module %s not loaded"), module_name);
+            pa_log(("Failed to unload module: Module %s not loaded"), module_name);
         complete_action();
         return;
     }
@@ -1815,10 +1808,7 @@ static void fill_volume(pa_cvolume *cv, unsigned supported) {
     if (volume.channels == 1) {
         pa_cvolume_set(&volume, supported, volume.values[0]);
     } else if (volume.channels != supported) {
-        pa_log(ngettext("Failed to set volume: You tried to set volumes for %d channel, whereas channel(s) supported = %d\n",
-                        "Failed to set volume: You tried to set volumes for %d channels, whereas channel(s) supported = %d\n",
-                        volume.channels),
-               volume.channels, supported);
+        pa_log("Failed to set volume: You tried to set volumes for %d channel, whereas channel(s) supported = %d\n", volume.channels);
         quit(1);
         return;
     }
@@ -1831,7 +1821,7 @@ static void fill_volume(pa_cvolume *cv, unsigned supported) {
 
 static void get_sink_mute_callback(pa_context *c, const pa_sink_info *i, int is_last, void *userdata) {
     if (is_last < 0) {
-        pa_log(_("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1849,7 +1839,7 @@ static void get_sink_mute_callback(pa_context *c, const pa_sink_info *i, int is_
 
 static void get_sink_volume_callback(pa_context *c, const pa_sink_info *i, int is_last, void *userdata) {
     if (is_last < 0) {
-        pa_log(_("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1873,7 +1863,7 @@ static void set_sink_volume_callback(pa_context *c, const pa_sink_info *i, int i
     pa_operation *o;
 
     if (is_last < 0) {
-        pa_log(_("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1890,14 +1880,14 @@ static void set_sink_volume_callback(pa_context *c, const pa_sink_info *i, int i
     if (o)
         pa_operation_unref(o);
     else {
-        pa_log(_("Failed to set sink volume: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to set sink volume: %s"), pa_strerror(pa_context_errno(c)));
         complete_action();
     }
 }
 
 static void get_source_mute_callback(pa_context *c, const pa_source_info *i, int is_last, void *userdata) {
     if (is_last < 0) {
-        pa_log(_("Failed to get source information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get source information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1915,7 +1905,7 @@ static void get_source_mute_callback(pa_context *c, const pa_source_info *i, int
 
 static void get_source_volume_callback(pa_context *c, const pa_source_info *i, int is_last, void *userdata) {
     if (is_last < 0) {
-        pa_log(_("Failed to get source information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get source information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1939,7 +1929,7 @@ static void set_source_volume_callback(pa_context *c, const pa_source_info *i, i
     pa_operation *o;
 
     if (is_last < 0) {
-        pa_log(_("Failed to get source information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get source information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1956,7 +1946,7 @@ static void set_source_volume_callback(pa_context *c, const pa_source_info *i, i
     if (o)
         pa_operation_unref(o);
     else {
-        pa_log(_("Failed to set source volume: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to set source volume: %s"), pa_strerror(pa_context_errno(c)));
         complete_action();
     }
 }
@@ -1965,7 +1955,7 @@ static void get_sink_input_volume_callback(pa_context *c, const pa_sink_input_in
     pa_cvolume cv;
 
     if (is_last < 0) {
-        pa_log(_("Failed to get sink input information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get sink input information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -1985,7 +1975,7 @@ static void get_source_output_volume_callback(pa_context *c, const pa_source_out
     pa_cvolume cv;
 
     if (is_last < 0) {
-        pa_log(_("Failed to get source output information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get source output information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -2003,7 +1993,7 @@ static void get_source_output_volume_callback(pa_context *c, const pa_source_out
 
 static void sink_toggle_mute_callback(pa_context *c, const pa_sink_info *i, int is_last, void *userdata) {
     if (is_last < 0) {
-        pa_log(_("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -2018,7 +2008,7 @@ static void sink_toggle_mute_callback(pa_context *c, const pa_sink_info *i, int 
 
 static void source_toggle_mute_callback(pa_context *c, const pa_source_info *o, int is_last, void *userdata) {
     if (is_last < 0) {
-        pa_log(_("Failed to get source information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get source information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -2033,7 +2023,7 @@ static void source_toggle_mute_callback(pa_context *c, const pa_source_info *o, 
 
 static void sink_input_toggle_mute_callback(pa_context *c, const pa_sink_input_info *i, int is_last, void *userdata) {
     if (is_last < 0) {
-        pa_log(_("Failed to get sink input information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get sink input information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -2048,7 +2038,7 @@ static void sink_input_toggle_mute_callback(pa_context *c, const pa_sink_input_i
 
 static void source_output_toggle_mute_callback(pa_context *c, const pa_source_output_info *o, int is_last, void *userdata) {
     if (is_last < 0) {
-        pa_log(_("Failed to get source output information: %s"), pa_strerror(pa_context_errno(c)));
+        pa_log(("Failed to get source output information: %s"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -2075,7 +2065,7 @@ static void set_sink_formats(pa_context *c, uint32_t sink, const char *str) {
         pa_format_info *f = pa_format_info_from_string(pa_strip(format));
 
         if (!f) {
-            pa_log(_("Failed to set format: invalid format string %s"), format);
+            pa_log(("Failed to set format: invalid format string %s"), format);
             goto error;
         }
 
@@ -2118,7 +2108,7 @@ static void stream_state_callback(pa_stream *s, void *userdata) {
 
         case PA_STREAM_FAILED:
         default:
-            pa_log(_("Failed to upload sample: %s"), pa_strerror(pa_context_errno(pa_stream_get_context(s))));
+            pa_log(("Failed to upload sample: %s"), pa_strerror(pa_context_errno(pa_stream_get_context(s))));
             quit(1);
     }
 }
@@ -2135,7 +2125,7 @@ static void stream_write_callback(pa_stream *s, size_t length, void *userdata) {
 
     if ((sf_readf_float(sndfile, d, l)) != l) {
         pa_xfree(d);
-        pa_log(_("Premature end of file"));
+        pa_log(("Premature end of file"));
         quit(1);
         return;
     }
@@ -2155,16 +2145,16 @@ static const char *subscription_event_type_to_string(pa_subscription_event_type_
     switch (t & PA_SUBSCRIPTION_EVENT_TYPE_MASK) {
 
     case PA_SUBSCRIPTION_EVENT_NEW:
-        return _("new");
+        return ("new");
 
     case PA_SUBSCRIPTION_EVENT_CHANGE:
-        return _("change");
+        return ("change");
 
     case PA_SUBSCRIPTION_EVENT_REMOVE:
-        return _("remove");
+        return ("remove");
     }
 
-    return _("unknown");
+    return ("unknown");
 }
 
 static const char *subscription_event_facility_to_string(pa_subscription_event_type_t t) {
@@ -2172,34 +2162,34 @@ static const char *subscription_event_facility_to_string(pa_subscription_event_t
     switch (t & PA_SUBSCRIPTION_EVENT_FACILITY_MASK) {
 
     case PA_SUBSCRIPTION_EVENT_SINK:
-        return _("sink");
+        return ("sink");
 
     case PA_SUBSCRIPTION_EVENT_SOURCE:
-        return _("source");
+        return ("source");
 
     case PA_SUBSCRIPTION_EVENT_SINK_INPUT:
-        return _("sink-input");
+        return ("sink-input");
 
     case PA_SUBSCRIPTION_EVENT_SOURCE_OUTPUT:
-        return _("source-output");
+        return ("source-output");
 
     case PA_SUBSCRIPTION_EVENT_MODULE:
-        return _("module");
+        return ("module");
 
     case PA_SUBSCRIPTION_EVENT_CLIENT:
-        return _("client");
+        return ("client");
 
     case PA_SUBSCRIPTION_EVENT_SAMPLE_CACHE:
-        return _("sample-cache");
+        return ("sample-cache");
 
     case PA_SUBSCRIPTION_EVENT_SERVER:
-        return _("server");
+        return ("server");
 
     case PA_SUBSCRIPTION_EVENT_CARD:
-        return _("card");
+        return ("card");
     }
 
-    return _("unknown");
+    return ("unknown");
 }
 
 static void context_subscribe_callback(pa_context *c, pa_subscription_event_type_t t, uint32_t idx, void *userdata) {
@@ -2217,7 +2207,7 @@ static void context_subscribe_callback(pa_context *c, pa_subscription_event_type
         printf("%s\n", json_str);
         pa_xfree(json_str);
     } else {
-        printf(_("Event '%s' on %s #%u\n"),
+        printf(("Event '%s' on %s #%u\n"),
            subscription_event_type_to_string(t),
            subscription_event_facility_to_string(t),
            idx);
@@ -2519,13 +2509,13 @@ static void context_state_callback(pa_context *c, void *userdata) {
 
         case PA_CONTEXT_FAILED:
         default:
-            pa_log(_("Connection failure: %s"), pa_strerror(pa_context_errno(c)));
+            pa_log(("Connection failure: %s"), pa_strerror(pa_context_errno(c)));
             quit(1);
     }
 }
 
 static void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata) {
-    pa_log(_("Got SIGINT, exiting."));
+    pa_log(("Got SIGINT, exiting."));
     quit(0);
 }
 
@@ -2558,7 +2548,7 @@ static int parse_volume(const char *vol_spec, pa_volume_t *vol, enum volume_flag
         atod_input++; /* pa_atod() doesn't accept leading '+', so skip it. */
 
     if (pa_atod(atod_input, &v) < 0) {
-        pa_log(_("Invalid volume specification"));
+        pa_log(("Invalid volume specification"));
         pa_xfree(vs);
         return -1;
     }
@@ -2592,7 +2582,7 @@ static int parse_volume(const char *vol_spec, pa_volume_t *vol, enum volume_flag
     }
 
     if (!PA_VOLUME_IS_VALID((pa_volume_t) v)) {
-        pa_log(_("Volume outside permissible range.\n"));
+        pa_log(("Volume outside permissible range.\n"));
         return -1;
     }
 
@@ -2605,7 +2595,7 @@ static int parse_volumes(char *args[], unsigned n) {
     unsigned i;
 
     if (n >= PA_CHANNELS_MAX) {
-        pa_log(_("Invalid number of volume specifications.\n"));
+        pa_log(("Invalid number of volume specifications.\n"));
         return -1;
     }
 
@@ -2617,7 +2607,7 @@ static int parse_volumes(char *args[], unsigned n) {
             return -1;
 
         if (i > 0 && flags != volume_flags) {
-            pa_log(_("Inconsistent volume specification.\n"));
+            pa_log(("Inconsistent volume specification.\n"));
             return -1;
         } else
             volume_flags = flags;
@@ -2647,35 +2637,35 @@ static enum mute_flags parse_mute(const char *mute_text) {
 
 static void help(const char *argv0) {
 
-    printf("%s %s %s\n",    argv0, _("[options]"), "stat");
-    printf("%s %s %s\n",    argv0, _("[options]"), "info");
-    printf("%s %s %s %s\n", argv0, _("[options]"), "list [short]", _("[TYPE]"));
-    printf("%s %s %s\n",    argv0, _("[options]"), "exit");
-    printf("%s %s %s %s\n", argv0, _("[options]"), "upload-sample", _("FILENAME [NAME]"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "play-sample ", _("NAME [SINK]"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "remove-sample ", _("NAME"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "load-module ", _("NAME [ARGS ...]"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "unload-module ", _("NAME|#N"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "move-(sink-input|source-output)", _("#N SINK|SOURCE"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "suspend-(sink|source)", _("NAME|#N 1|0"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "set-card-profile ", _("CARD PROFILE"));
-    printf("%s %s %s\n", argv0, _("[options]"), "get-default-(sink|source)");
-    printf("%s %s %s %s\n", argv0, _("[options]"), "set-default-(sink|source)", _("NAME"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "set-(sink|source)-port", _("NAME|#N PORT"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "get-(sink|source)-volume", _("NAME|#N"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "get-(sink|source)-mute", _("NAME|#N"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "set-(sink|source)-volume", _("NAME|#N VOLUME [VOLUME ...]"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "set-(sink-input|source-output)-volume", _("#N VOLUME [VOLUME ...]"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "set-(sink|source)-mute", _("NAME|#N 1|0|toggle"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "set-(sink-input|source-output)-mute", _("#N 1|0|toggle"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "set-sink-formats", _("#N FORMATS"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "set-port-latency-offset", _("CARD-NAME|CARD-#N PORT OFFSET"));
-    printf("%s %s %s %s\n", argv0, _("[options]"), "send-message", _("RECIPIENT MESSAGE [MESSAGE_PARAMETERS]"));
-    printf("%s %s %s\n",    argv0, _("[options]"), "subscribe");
-    printf(_("\nThe special names @DEFAULT_SINK@, @DEFAULT_SOURCE@ and @DEFAULT_MONITOR@\n"
+    printf("%s %s %s\n",    argv0, ("[options]"), "stat");
+    printf("%s %s %s\n",    argv0, ("[options]"), "info");
+    printf("%s %s %s %s\n", argv0, ("[options]"), "list [short]", ("[TYPE]"));
+    printf("%s %s %s\n",    argv0, ("[options]"), "exit");
+    printf("%s %s %s %s\n", argv0, ("[options]"), "upload-sample", ("FILENAME [NAME]"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "play-sample ", ("NAME [SINK]"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "remove-sample ", ("NAME"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "load-module ", ("NAME [ARGS ...]"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "unload-module ", ("NAME|#N"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "move-(sink-input|source-output)", ("#N SINK|SOURCE"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "suspend-(sink|source)", ("NAME|#N 1|0"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "set-card-profile ", ("CARD PROFILE"));
+    printf("%s %s %s\n", argv0, ("[options]"), "get-default-(sink|source)");
+    printf("%s %s %s %s\n", argv0, ("[options]"), "set-default-(sink|source)", ("NAME"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "set-(sink|source)-port", ("NAME|#N PORT"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "get-(sink|source)-volume", ("NAME|#N"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "get-(sink|source)-mute", ("NAME|#N"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "set-(sink|source)-volume", ("NAME|#N VOLUME [VOLUME ...]"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "set-(sink-input|source-output)-volume", ("#N VOLUME [VOLUME ...]"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "set-(sink|source)-mute", ("NAME|#N 1|0|toggle"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "set-(sink-input|source-output)-mute", ("#N 1|0|toggle"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "set-sink-formats", ("#N FORMATS"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "set-port-latency-offset", ("CARD-NAME|CARD-#N PORT OFFSET"));
+    printf("%s %s %s %s\n", argv0, ("[options]"), "send-message", ("RECIPIENT MESSAGE [MESSAGE_PARAMETERS]"));
+    printf("%s %s %s\n",    argv0, ("[options]"), "subscribe");
+    printf(("\nThe special names @DEFAULT_SINK@, @DEFAULT_SOURCE@ and @DEFAULT_MONITOR@\n"
              "can be used to specify the default sink, source and monitor.\n"));
 
-    printf(_("\n"
+    printf(("\n"
              "  -h, --help                            Show this help\n"
              "      --version                         Show version\n\n"
              "  -f, --format=FORMAT                   The format of the output. Either \"normal\" or \"json\"\n"
@@ -2702,9 +2692,6 @@ int main(int argc, char *argv[]) {
     };
 
     setlocale(LC_ALL, "");
-#ifdef ENABLE_NLS
-    bindtextdomain(GETTEXT_PACKAGE, PULSE_LOCALEDIR);
-#endif
 
     bn = pa_path_get_filename(argv[0]);
 
@@ -2718,7 +2705,7 @@ int main(int argc, char *argv[]) {
                 goto quit;
 
             case ARG_VERSION:
-                printf(_("pactl %s\n"
+                printf(("pactl %s\n"
                          "Compiled with libpulse %s\n"
                          "Linked with libpulse %s\n"),
                        PACKAGE_VERSION,
@@ -2742,7 +2729,7 @@ int main(int argc, char *argv[]) {
                 if (!(t = pa_locale_to_utf8(optarg)) ||
                     pa_proplist_sets(proplist, PA_PROP_APPLICATION_NAME, t) < 0) {
 
-                    pa_log(_("Invalid client name '%s'"), t ? t : optarg);
+                    pa_log(("Invalid client name '%s'"), t ? t : optarg);
                     pa_xfree(t);
                     goto quit;
                 }
@@ -2762,7 +2749,7 @@ int main(int argc, char *argv[]) {
         format = JSON;
         setlocale(LC_NUMERIC, "C");
     } else {
-        pa_log(_("Invalid format value '%s'"), opt_format);
+        pa_log(("Invalid format value '%s'"), opt_format);
         goto quit;
     }
 
@@ -2789,7 +2776,7 @@ int main(int argc, char *argv[]) {
                 } else if (pa_streq(argv[i], "short")) {
                     short_list_format = true;
                 } else {
-                    pa_log(_("Specify nothing, or one of: %s"), "modules, sinks, sources, sink-inputs, source-outputs, clients, samples, cards, message-handlers");
+                    pa_log(("Specify nothing, or one of: %s"), "modules, sinks, sources, sink-inputs, source-outputs, clients, samples, cards, message-handlers");
                     goto quit;
                 }
             }
@@ -2799,7 +2786,7 @@ int main(int argc, char *argv[]) {
             action = UPLOAD_SAMPLE;
 
             if (optind+1 >= argc) {
-                pa_log(_("Please specify a sample file to load"));
+                pa_log(("Please specify a sample file to load"));
                 goto quit;
             }
 
@@ -2812,19 +2799,19 @@ int main(int argc, char *argv[]) {
 
             pa_zero(sfi);
             if (!(sndfile = sf_open(argv[optind+1], SFM_READ, &sfi))) {
-                pa_log(_("Failed to open sound file."));
+                pa_log(("Failed to open sound file."));
                 goto quit;
             }
 
             if (pa_sndfile_read_sample_spec(sndfile, &sample_spec) < 0) {
-                pa_log(_("Failed to determine sample specification from file."));
+                pa_log(("Failed to determine sample specification from file."));
                 goto quit;
             }
             sample_spec.format = PA_SAMPLE_FLOAT32;
 
             if (pa_sndfile_read_channel_map(sndfile, &channel_map) < 0) {
                 if (sample_spec.channels > 2)
-                    pa_log(_("Warning: Failed to determine sample specification from file."));
+                    pa_log(("Warning: Failed to determine sample specification from file."));
                 pa_channel_map_init_extend(&channel_map, sample_spec.channels, PA_CHANNEL_MAP_DEFAULT);
             }
 
@@ -2834,7 +2821,7 @@ int main(int argc, char *argv[]) {
         } else if (pa_streq(argv[optind], "play-sample")) {
             action = PLAY_SAMPLE;
             if (argc != optind+2 && argc != optind+3) {
-                pa_log(_("You have to specify a sample name to play"));
+                pa_log(("You have to specify a sample name to play"));
                 goto quit;
             }
 
@@ -2846,7 +2833,7 @@ int main(int argc, char *argv[]) {
         } else if (pa_streq(argv[optind], "remove-sample")) {
             action = REMOVE_SAMPLE;
             if (argc != optind+2) {
-                pa_log(_("You have to specify a sample name to remove"));
+                pa_log(("You have to specify a sample name to remove"));
                 goto quit;
             }
 
@@ -2855,7 +2842,7 @@ int main(int argc, char *argv[]) {
         } else if (pa_streq(argv[optind], "move-sink-input")) {
             action = MOVE_SINK_INPUT;
             if (argc != optind+3) {
-                pa_log(_("You have to specify a sink input index and a sink"));
+                pa_log(("You have to specify a sink input index and a sink"));
                 goto quit;
             }
 
@@ -2865,7 +2852,7 @@ int main(int argc, char *argv[]) {
         } else if (pa_streq(argv[optind], "move-source-output")) {
             action = MOVE_SOURCE_OUTPUT;
             if (argc != optind+3) {
-                pa_log(_("You have to specify a source output index and a source"));
+                pa_log(("You have to specify a source output index and a source"));
                 goto quit;
             }
 
@@ -2880,7 +2867,7 @@ int main(int argc, char *argv[]) {
             action = LOAD_MODULE;
 
             if (argc <= optind+1) {
-                pa_log(_("You have to specify a module name and arguments."));
+                pa_log(("You have to specify a module name and arguments."));
                 goto quit;
             }
 
@@ -2900,7 +2887,7 @@ int main(int argc, char *argv[]) {
             action = UNLOAD_MODULE;
 
             if (argc != optind+2) {
-                pa_log(_("You have to specify a module index or name"));
+                pa_log(("You have to specify a module index or name"));
                 goto quit;
             }
 
@@ -2913,12 +2900,12 @@ int main(int argc, char *argv[]) {
             action = SUSPEND_SINK;
 
             if (argc > optind+3 || optind+1 >= argc) {
-                pa_log(_("You may not specify more than one sink. You have to specify a boolean value."));
+                pa_log(("You may not specify more than one sink. You have to specify a boolean value."));
                 goto quit;
             }
 
             if ((b = pa_parse_boolean(argv[argc-1])) < 0) {
-                pa_log(_("Invalid suspend specification."));
+                pa_log(("Invalid suspend specification."));
                 goto quit;
             }
 
@@ -2933,12 +2920,12 @@ int main(int argc, char *argv[]) {
             action = SUSPEND_SOURCE;
 
             if (argc > optind+3 || optind+1 >= argc) {
-                pa_log(_("You may not specify more than one source. You have to specify a boolean value."));
+                pa_log(("You may not specify more than one source. You have to specify a boolean value."));
                 goto quit;
             }
 
             if ((b = pa_parse_boolean(argv[argc-1])) < 0) {
-                pa_log(_("Invalid suspend specification."));
+                pa_log(("Invalid suspend specification."));
                 goto quit;
             }
 
@@ -2950,7 +2937,7 @@ int main(int argc, char *argv[]) {
             action = SET_CARD_PROFILE;
 
             if (argc != optind+3) {
-                pa_log(_("You have to specify a card name/index and a profile name"));
+                pa_log(("You have to specify a card name/index and a profile name"));
                 goto quit;
             }
 
@@ -2961,7 +2948,7 @@ int main(int argc, char *argv[]) {
             action = SET_SINK_PORT;
 
             if (argc != optind+3) {
-                pa_log(_("You have to specify a sink name/index and a port name"));
+                pa_log(("You have to specify a sink name/index and a port name"));
                 goto quit;
             }
 
@@ -2972,7 +2959,7 @@ int main(int argc, char *argv[]) {
             action = SET_DEFAULT_SINK;
 
             if (argc != optind+2) {
-                pa_log(_("You have to specify a sink name"));
+                pa_log(("You have to specify a sink name"));
                 goto quit;
             }
 
@@ -2985,7 +2972,7 @@ int main(int argc, char *argv[]) {
             action = SET_SOURCE_PORT;
 
             if (argc != optind+3) {
-                pa_log(_("You have to specify a source name/index and a port name"));
+                pa_log(("You have to specify a source name/index and a port name"));
                 goto quit;
             }
 
@@ -2996,7 +2983,7 @@ int main(int argc, char *argv[]) {
             action = SET_DEFAULT_SOURCE;
 
             if (argc != optind+2) {
-                pa_log(_("You have to specify a source name"));
+                pa_log(("You have to specify a source name"));
                 goto quit;
             }
 
@@ -3009,7 +2996,7 @@ int main(int argc, char *argv[]) {
             action = GET_SINK_VOLUME;
 
             if (argc < optind+2) {
-                pa_log(_("You have to specify a sink name/index"));
+                pa_log(("You have to specify a sink name/index"));
                 goto quit;
             }
 
@@ -3019,7 +3006,7 @@ int main(int argc, char *argv[]) {
             action = SET_SINK_VOLUME;
 
             if (argc < optind+3) {
-                pa_log(_("You have to specify a sink name/index and a volume"));
+                pa_log(("You have to specify a sink name/index and a volume"));
                 goto quit;
             }
 
@@ -3032,7 +3019,7 @@ int main(int argc, char *argv[]) {
             action = GET_SOURCE_VOLUME;
 
             if (argc < optind+2) {
-                pa_log(_("You have to specify a source name/index"));
+                pa_log(("You have to specify a source name/index"));
                 goto quit;
             }
 
@@ -3042,7 +3029,7 @@ int main(int argc, char *argv[]) {
             action = SET_SOURCE_VOLUME;
 
             if (argc < optind+3) {
-                pa_log(_("You have to specify a source name/index and a volume"));
+                pa_log(("You have to specify a source name/index and a volume"));
                 goto quit;
             }
 
@@ -3055,12 +3042,12 @@ int main(int argc, char *argv[]) {
             action = SET_SINK_INPUT_VOLUME;
 
             if (argc < optind+3) {
-                pa_log(_("You have to specify a sink input index and a volume"));
+                pa_log(("You have to specify a sink input index and a volume"));
                 goto quit;
             }
 
             if (pa_atou(argv[optind+1], &sink_input_idx) < 0) {
-                pa_log(_("Invalid sink input index"));
+                pa_log(("Invalid sink input index"));
                 goto quit;
             }
 
@@ -3071,12 +3058,12 @@ int main(int argc, char *argv[]) {
             action = SET_SOURCE_OUTPUT_VOLUME;
 
             if (argc < optind+3) {
-                pa_log(_("You have to specify a source output index and a volume"));
+                pa_log(("You have to specify a source output index and a volume"));
                 goto quit;
             }
 
             if (pa_atou(argv[optind+1], &source_output_idx) < 0) {
-                pa_log(_("Invalid source output index"));
+                pa_log(("Invalid source output index"));
                 goto quit;
             }
 
@@ -3087,7 +3074,7 @@ int main(int argc, char *argv[]) {
             action = GET_SINK_MUTE;
 
             if (argc < optind+2) {
-                pa_log(_("You have to specify a sink name/index"));
+                pa_log(("You have to specify a sink name/index"));
                 goto quit;
             }
 
@@ -3097,12 +3084,12 @@ int main(int argc, char *argv[]) {
             action = SET_SINK_MUTE;
 
             if (argc != optind+3) {
-                pa_log(_("You have to specify a sink name/index and a mute action (0, 1, or 'toggle')"));
+                pa_log(("You have to specify a sink name/index and a mute action (0, 1, or 'toggle')"));
                 goto quit;
             }
 
             if ((mute = parse_mute(argv[optind+2])) == INVALID_MUTE) {
-                pa_log(_("Invalid mute specification"));
+                pa_log(("Invalid mute specification"));
                 goto quit;
             }
 
@@ -3112,7 +3099,7 @@ int main(int argc, char *argv[]) {
             action = GET_SOURCE_MUTE;
 
             if (argc < optind+2) {
-                pa_log(_("You have to specify a source name/index"));
+                pa_log(("You have to specify a source name/index"));
                 goto quit;
             }
 
@@ -3122,12 +3109,12 @@ int main(int argc, char *argv[]) {
             action = SET_SOURCE_MUTE;
 
             if (argc != optind+3) {
-                pa_log(_("You have to specify a source name/index and a mute action (0, 1, or 'toggle')"));
+                pa_log(("You have to specify a source name/index and a mute action (0, 1, or 'toggle')"));
                 goto quit;
             }
 
             if ((mute = parse_mute(argv[optind+2])) == INVALID_MUTE) {
-                pa_log(_("Invalid mute specification"));
+                pa_log(("Invalid mute specification"));
                 goto quit;
             }
 
@@ -3137,17 +3124,17 @@ int main(int argc, char *argv[]) {
             action = SET_SINK_INPUT_MUTE;
 
             if (argc != optind+3) {
-                pa_log(_("You have to specify a sink input index and a mute action (0, 1, or 'toggle')"));
+                pa_log(("You have to specify a sink input index and a mute action (0, 1, or 'toggle')"));
                 goto quit;
             }
 
             if (pa_atou(argv[optind+1], &sink_input_idx) < 0) {
-                pa_log(_("Invalid sink input index specification"));
+                pa_log(("Invalid sink input index specification"));
                 goto quit;
             }
 
             if ((mute = parse_mute(argv[optind+2])) == INVALID_MUTE) {
-                pa_log(_("Invalid mute specification"));
+                pa_log(("Invalid mute specification"));
                 goto quit;
             }
 
@@ -3155,17 +3142,17 @@ int main(int argc, char *argv[]) {
             action = SET_SOURCE_OUTPUT_MUTE;
 
             if (argc != optind+3) {
-                pa_log(_("You have to specify a source output index and a mute action (0, 1, or 'toggle')"));
+                pa_log(("You have to specify a source output index and a mute action (0, 1, or 'toggle')"));
                 goto quit;
             }
 
             if (pa_atou(argv[optind+1], &source_output_idx) < 0) {
-                pa_log(_("Invalid source output index specification"));
+                pa_log(("Invalid source output index specification"));
                 goto quit;
             }
 
             if ((mute = parse_mute(argv[optind+2])) == INVALID_MUTE) {
-                pa_log(_("Invalid mute specification"));
+                pa_log(("Invalid mute specification"));
                 goto quit;
             }
 
@@ -3173,7 +3160,7 @@ int main(int argc, char *argv[]) {
             action = SEND_MESSAGE;
 
             if (argc < optind+3) {
-                pa_log(_("You have to specify at least an object path and a message name"));
+                pa_log(("You have to specify at least an object path and a message name"));
                 goto quit;
             }
 
@@ -3183,7 +3170,7 @@ int main(int argc, char *argv[]) {
                 message_args = pa_xstrdup(argv[optind + 3]);
 
             if (argc > optind+4)
-                pa_log(_("Excess arguments given, they will be ignored. Note that all message parameters must be given as a single string."));
+                pa_log(("Excess arguments given, they will be ignored. Note that all message parameters must be given as a single string."));
 
         } else if (pa_streq(argv[optind], "subscribe"))
 
@@ -3193,7 +3180,7 @@ int main(int argc, char *argv[]) {
             int32_t tmp;
 
             if (argc != optind+3 || pa_atoi(argv[optind+1], &tmp) < 0) {
-                pa_log(_("You have to specify a sink index and a semicolon-separated list of supported formats"));
+                pa_log(("You have to specify a sink index and a semicolon-separated list of supported formats"));
                 goto quit;
             }
 
@@ -3205,14 +3192,14 @@ int main(int argc, char *argv[]) {
             action = SET_PORT_LATENCY_OFFSET;
 
             if (argc != optind+4) {
-                pa_log(_("You have to specify a card name/index, a port name and a latency offset"));
+                pa_log(("You have to specify a card name/index, a port name and a latency offset"));
                 goto quit;
             }
 
             card_name = pa_xstrdup(argv[optind+1]);
             port_name = pa_xstrdup(argv[optind+2]);
             if (pa_atoi(argv[optind + 3], &latency_offset) < 0) {
-                pa_log(_("Could not parse latency offset"));
+                pa_log(("Could not parse latency offset"));
                 goto quit;
             }
 
@@ -3224,12 +3211,12 @@ int main(int argc, char *argv[]) {
     }
 
     if (action == NONE) {
-        pa_log(_("No valid command specified."));
+        pa_log(("No valid command specified."));
         goto quit;
     }
 
     if (!(m = pa_mainloop_new())) {
-        pa_log(_("pa_mainloop_new() failed."));
+        pa_log(("pa_mainloop_new() failed."));
         goto quit;
     }
 
@@ -3241,18 +3228,18 @@ int main(int argc, char *argv[]) {
     pa_disable_sigpipe();
 
     if (!(context = pa_context_new_with_proplist(mainloop_api, NULL, proplist))) {
-        pa_log(_("pa_context_new() failed."));
+        pa_log(("pa_context_new() failed."));
         goto quit;
     }
 
     pa_context_set_state_callback(context, context_state_callback, NULL);
     if (pa_context_connect(context, server, 0, NULL) < 0) {
-        pa_log(_("pa_context_connect() failed: %s"), pa_strerror(pa_context_errno(context)));
+        pa_log(("pa_context_connect() failed: %s"), pa_strerror(pa_context_errno(context)));
         goto quit;
     }
 
     if (pa_mainloop_run(m, &ret) < 0) {
-        pa_log(_("pa_mainloop_run() failed."));
+        pa_log(("pa_mainloop_run() failed."));
         goto quit;
     }
 

@@ -267,7 +267,7 @@ static int parse_log_target(pa_config_parser_state *state) {
     c = state->data;
 
     if (pa_daemon_conf_set_log_target(c, state->rvalue) < 0) {
-        pa_log(_("[%s:%u] Invalid log target '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid log target '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -282,7 +282,7 @@ static int parse_log_level(pa_config_parser_state *state) {
     c = state->data;
 
     if (pa_daemon_conf_set_log_level(c, state->rvalue) < 0) {
-        pa_log(_("[%s:%u] Invalid log level '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid log level '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -297,7 +297,7 @@ static int parse_resample_method(pa_config_parser_state *state) {
     c = state->data;
 
     if (pa_daemon_conf_set_resample_method(c, state->rvalue) < 0) {
-        pa_log(_("[%s:%u] Invalid resample method '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid resample method '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -319,7 +319,7 @@ static int parse_rlimit(pa_config_parser_state *state) {
     } else {
         int32_t k;
         if (pa_atoi(state->rvalue, &k) < 0) {
-            pa_log(_("[%s:%u] Invalid rlimit '%s'."), state->filename, state->lineno, state->rvalue);
+            pa_log(("[%s:%u] Invalid rlimit '%s'."), state->filename, state->lineno, state->rvalue);
             return -1;
         }
         r->is_set = k >= 0;
@@ -339,7 +339,7 @@ static int parse_sample_format(pa_config_parser_state *state) {
     c = state->data;
 
     if ((f = pa_parse_sample_format(state->rvalue)) < 0) {
-        pa_log(_("[%s:%u] Invalid sample format '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid sample format '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -356,7 +356,7 @@ static int parse_sample_rate(pa_config_parser_state *state) {
     c = state->data;
 
     if (pa_atou(state->rvalue, &r) < 0 || !pa_sample_rate_valid(r)) {
-        pa_log(_("[%s:%u] Invalid sample rate '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid sample rate '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -373,7 +373,7 @@ static int parse_alternate_sample_rate(pa_config_parser_state *state) {
     c = state->data;
 
     if (pa_atou(state->rvalue, &r) < 0 || !pa_sample_rate_valid(r)) {
-        pa_log(_("[%s:%u] Invalid sample rate '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid sample rate '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -396,7 +396,7 @@ static int parse_sample_channels(pa_config_parser_state *state) {
     i = state->data;
 
     if (pa_atoi(state->rvalue, &n) < 0 || !pa_channels_valid(n)) {
-        pa_log(_("[%s:%u] Invalid sample channels '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid sample channels '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -413,7 +413,7 @@ static int parse_channel_map(pa_config_parser_state *state) {
     i = state->data;
 
     if (!pa_channel_map_parse(&i->conf->default_channel_map, state->rvalue)) {
-        pa_log(_("[%s:%u] Invalid channel map '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid channel map '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -430,7 +430,7 @@ static int parse_fragments(pa_config_parser_state *state) {
     c = state->data;
 
     if (pa_atoi(state->rvalue, &n) < 0 || n < 2) {
-        pa_log(_("[%s:%u] Invalid number of fragments '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid number of fragments '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -447,7 +447,7 @@ static int parse_fragment_size_msec(pa_config_parser_state *state) {
     c = state->data;
 
     if (pa_atoi(state->rvalue, &n) < 0 || n < 1) {
-        pa_log(_("[%s:%u] Invalid fragment size '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid fragment size '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -464,7 +464,7 @@ static int parse_nice_level(pa_config_parser_state *state) {
     c = state->data;
 
     if (pa_atoi(state->rvalue, &level) < 0 || level < -20 || level > 19) {
-        pa_log(_("[%s:%u] Invalid nice level '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid nice level '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -549,7 +549,7 @@ static int parse_server_type(pa_config_parser_state *state) {
     c = state->data;
 
     if (pa_daemon_conf_set_local_server_type(c, state->rvalue) < 0) {
-        pa_log(_("[%s:%u] Invalid server type '%s'."), state->filename, state->lineno, state->rvalue);
+        pa_log(("[%s:%u] Invalid server type '%s'."), state->filename, state->lineno, state->rvalue);
         return -1;
     }
 
@@ -682,7 +682,7 @@ int pa_daemon_conf_load(pa_daemon_conf *c, const char *filename) {
         pa_open_config_file(default_config_file, DEFAULT_CONFIG_FILE_USER, ENV_CONFIG_FILE, &c->config_file);
 
     if (!f && errno != ENOENT) {
-        pa_log_warn(_("Failed to open configuration file: %s"), pa_cstrerror(errno));
+        pa_log_warn(("Failed to open configuration file: %s"), pa_cstrerror(errno));
         goto finish;
     }
 
@@ -698,7 +698,7 @@ int pa_daemon_conf_load(pa_daemon_conf *c, const char *filename) {
         if (ci.default_sample_spec_set &&
             ci.default_channel_map_set &&
             c->default_channel_map.channels != c->default_sample_spec.channels) {
-            pa_log_error(_("The specified default channel map has a different number of channels than the specified default number of channels."));
+            pa_log_error(("The specified default channel map has a different number of channels than the specified default number of channels."));
             r = -1;
             goto finish;
         } else if (ci.default_sample_spec_set)
@@ -785,7 +785,7 @@ char *pa_daemon_conf_dump(pa_daemon_conf *c) {
     s = pa_strbuf_new();
 
     if (c->config_file)
-        pa_strbuf_printf(s, _("### Read from configuration file: %s ###\n"), c->config_file);
+        pa_strbuf_printf(s, ("### Read from configuration file: %s ###\n"), c->config_file);
 
     pa_assert(c->log_level < PA_LOG_LEVEL_MAX);
 

@@ -714,7 +714,7 @@ static int context_autospawn(pa_context *c) {
         c->spawn_api.prefork();
 
     if ((pid = fork()) < 0) {
-        pa_log_error(_("fork(): %s"), pa_cstrerror(errno));
+        pa_log_error(("fork(): %s"), pa_cstrerror(errno));
         pa_context_fail(c, PA_ERR_INTERNAL);
 
         if (c->spawn_api.postfork)
@@ -769,7 +769,7 @@ static int context_autospawn(pa_context *c) {
     if (r < 0) {
 
         if (errno != ECHILD) {
-            pa_log(_("waitpid(): %s"), pa_cstrerror(errno));
+            pa_log(("waitpid(): %s"), pa_cstrerror(errno));
             pa_context_fail(c, PA_ERR_INTERNAL);
             goto fail;
         }
@@ -1485,7 +1485,7 @@ void pa_command_extension(pa_pdispatch *pd, uint32_t command, uint32_t tag, pa_t
     else if (pa_streq(name, "module-stream-restore"))
         pa_ext_stream_restore_command(c, tag, t);
     else
-        pa_log(_("Received message for unknown extension '%s'"), name);
+        pa_log(("Received message for unknown extension '%s'"), name);
 
 finish:
     pa_context_unref(c);

@@ -47,11 +47,11 @@
 
 
 PA_MODULE_AUTHOR("Christopher Snowhill");
-PA_MODULE_DESCRIPTION(_("Virtual surround sink"));
+PA_MODULE_DESCRIPTION(("Virtual surround sink"));
 PA_MODULE_VERSION(PACKAGE_VERSION);
 PA_MODULE_LOAD_ONCE(false);
 PA_MODULE_USAGE(
-        _("sink_name=<name for the sink> "
+        ("sink_name=<name for the sink> "
           "sink_properties=<properties for the sink> "
           "master=<name of sink to filter> "
           "sink_master=<name of sink to filter> "

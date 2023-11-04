@@ -686,7 +686,7 @@ static pa_device_port *raop_create_port(struct userdata *u, const char *server) 
 static pa_card_profile *raop_create_profile() {
     pa_card_profile *profile;
 
-    profile = pa_card_profile_new("RAOP", _("RAOP standard profile"), 0);
+    profile = pa_card_profile_new("RAOP", ("RAOP standard profile"), 0);
     profile->priority = 10;
     profile->n_sinks = 1;
     profile->n_sources = 0;

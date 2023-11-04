@@ -372,7 +372,7 @@ static void on_sink_created(struct userdata *u) {
     char *username = pa_get_user_name_malloc();
     char *hostname = pa_get_host_name_malloc();
     /* TODO: old tunnel put here the remote sink_name into stream name e.g. 'Null Output for lynxis@lazus' */
-    char *stream_name = pa_sprintf_malloc(_("Tunnel for %s@%s"), username, hostname);
+    char *stream_name = pa_sprintf_malloc(("Tunnel for %s@%s"), username, hostname);
     pa_xfree(hostname);
     pa_xfree(username);
 
@@ -717,7 +717,7 @@ static int do_init(pa_module *m) {
     pa_proplist_sets(u->sink_proplist, PA_PROP_DEVICE_CLASS, "sound");
     pa_proplist_setf(u->sink_proplist,
                      PA_PROP_DEVICE_DESCRIPTION,
-                     _("Tunnel to %s/%s"),
+                     ("Tunnel to %s/%s"),
                      remote_server,
                      pa_strempty(u->remote_sink_name));
 

@@ -3606,12 +3606,12 @@ bool pa_device_init_description(pa_proplist *p, pa_card *card) {
     if (!d)
         if ((s = pa_proplist_gets(p, PA_PROP_DEVICE_FORM_FACTOR)))
             if (pa_streq(s, "internal"))
-                d = _("Built-in Audio");
+                d = ("Built-in Audio");
 
     if (!d)
         if ((s = pa_proplist_gets(p, PA_PROP_DEVICE_CLASS)))
             if (pa_streq(s, "modem"))
-                d = _("Modem");
+                d = ("Modem");
 
     if (!d)
         d = pa_proplist_gets(p, PA_PROP_DEVICE_PRODUCT_NAME);

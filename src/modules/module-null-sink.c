@@ -43,7 +43,7 @@
 #include <pulsecore/rtpoll.h>
 
 PA_MODULE_AUTHOR("Lennart Poettering");
-PA_MODULE_DESCRIPTION(_("Clocked NULL sink"));
+PA_MODULE_DESCRIPTION(("Clocked NULL sink"));
 PA_MODULE_VERSION(PACKAGE_VERSION);
 PA_MODULE_LOAD_ONCE(false);
 PA_MODULE_USAGE(
@@ -353,7 +353,7 @@ int pa__init(pa_module*m) {
     pa_sink_new_data_set_name(&data, pa_modargs_get_value(ma, "sink_name", DEFAULT_SINK_NAME));
     pa_sink_new_data_set_sample_spec(&data, &ss);
     pa_sink_new_data_set_channel_map(&data, &map);
-    pa_proplist_sets(data.proplist, PA_PROP_DEVICE_DESCRIPTION, _("Null Output"));
+    pa_proplist_sets(data.proplist, PA_PROP_DEVICE_DESCRIPTION, ("Null Output"));
     pa_proplist_sets(data.proplist, PA_PROP_DEVICE_CLASS, "abstract");
 
     u->formats = pa_idxset_new(NULL, NULL);
@@ -365,7 +365,7 @@ int pa__init(pa_module*m) {
             format = pa_format_info_from_string(pa_strip(f));
 
             if (!format) {
-                pa_log(_("Failed to set format: invalid format string %s"), f);
+                pa_log(("Failed to set format: invalid format string %s"), f);
 		pa_xfree(f);
                 goto fail;
             }

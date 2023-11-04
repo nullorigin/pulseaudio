@@ -162,7 +162,7 @@ int pa_log_set_target(pa_log_target *t) {
             break;
         case PA_LOG_FILE:
             if ((fd = pa_open_cloexec(t->file, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR)) < 0) {
-                pa_log(_("Failed to open target file '%s'."), t->file);
+                pa_log(("Failed to open target file '%s'."), t->file);
                 return -1;
             }
             break;
@@ -185,7 +185,7 @@ int pa_log_set_target(pa_log_target *t) {
             }
 
             if (version > LOG_MAX_SUFFIX_NUMBER) {
-                pa_log(_("Tried to open target file '%s', '%s.1', '%s.2' ... '%s.%d', but all failed."),
+                pa_log(("Tried to open target file '%s', '%s.1', '%s.2' ... '%s.%d', but all failed."),
                         t->file, t->file, t->file, t->file, LOG_MAX_SUFFIX_NUMBER);
                 pa_xfree(file_path);
                 return -1;
@@ -648,7 +648,7 @@ pa_log_target *pa_log_parse_target(const char *string) {
     else if (pa_startswith(string, "newfile:"))
         t = pa_log_target_new(PA_LOG_NEWFILE, string + 8);
     else
-        pa_log(_("Invalid log target."));
+        pa_log(("Invalid log target."));
 
     return t;
 }

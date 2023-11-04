@@ -437,7 +437,7 @@ const char* pa_channel_position_to_pretty_string(pa_channel_position_t pos) {
 
     pa_init_i18n();
 
-    return _(pretty_table[pos]);
+    return (pretty_table[pos]);
 }
 
 int pa_channel_map_equal(const pa_channel_map *a, const pa_channel_map *b) {
@@ -475,7 +475,7 @@ char* pa_channel_map_snprint(char *s, size_t l, const pa_channel_map *map) {
     pa_init_i18n();
 
     if (!pa_channel_map_valid(map)) {
-        pa_snprintf(s, l, _("(invalid)"));
+        pa_snprintf(s, l, ("(invalid)"));
         return s;
     }
 
@@ -767,41 +767,41 @@ const char* pa_channel_map_to_pretty_name(const pa_channel_map *map) {
 
     if (pa_bitset_equals(in_map, PA_CHANNEL_POSITION_MAX,
                          PA_CHANNEL_POSITION_MONO, -1))
-        return _("Mono");
+        return ("Mono");
 
     if (pa_bitset_equals(in_map, PA_CHANNEL_POSITION_MAX,
                          PA_CHANNEL_POSITION_LEFT, PA_CHANNEL_POSITION_RIGHT, -1))
-        return _("Stereo");
+        return ("Stereo");
 
     if (pa_bitset_equals(in_map, PA_CHANNEL_POSITION_MAX,
                          PA_CHANNEL_POSITION_FRONT_LEFT, PA_CHANNEL_POSITION_FRONT_RIGHT,
                          PA_CHANNEL_POSITION_REAR_LEFT, PA_CHANNEL_POSITION_REAR_RIGHT, -1))
-        return _("Surround 4.0");
+        return ("Surround 4.0");
 
     if (pa_bitset_equals(in_map, PA_CHANNEL_POSITION_MAX,
                          PA_CHANNEL_POSITION_FRONT_LEFT, PA_CHANNEL_POSITION_FRONT_RIGHT,
                          PA_CHANNEL_POSITION_REAR_LEFT, PA_CHANNEL_POSITION_REAR_RIGHT,
                          PA_CHANNEL_POSITION_LFE, -1))
-        return _("Surround 4.1");
+        return ("Surround 4.1");
 
     if (pa_bitset_equals(in_map, PA_CHANNEL_POSITION_MAX,
                          PA_CHANNEL_POSITION_FRONT_LEFT, PA_CHANNEL_POSITION_FRONT_RIGHT,
                          PA_CHANNEL_POSITION_REAR_LEFT, PA_CHANNEL_POSITION_REAR_RIGHT,
                          PA_CHANNEL_POSITION_FRONT_CENTER, -1))
-        return _("Surround 5.0");
+        return ("Surround 5.0");
 
     if (pa_bitset_equals(in_map, PA_CHANNEL_POSITION_MAX,
                          PA_CHANNEL_POSITION_FRONT_LEFT, PA_CHANNEL_POSITION_FRONT_RIGHT,
                          PA_CHANNEL_POSITION_REAR_LEFT, PA_CHANNEL_POSITION_REAR_RIGHT,
                          PA_CHANNEL_POSITION_FRONT_CENTER, PA_CHANNEL_POSITION_LFE, -1))
-        return _("Surround 5.1");
+        return ("Surround 5.1");
 
     if (pa_bitset_equals(in_map, PA_CHANNEL_POSITION_MAX,
                          PA_CHANNEL_POSITION_FRONT_LEFT, PA_CHANNEL_POSITION_FRONT_RIGHT,
                          PA_CHANNEL_POSITION_REAR_LEFT, PA_CHANNEL_POSITION_REAR_RIGHT,
                          PA_CHANNEL_POSITION_FRONT_CENTER, PA_CHANNEL_POSITION_LFE,
                          PA_CHANNEL_POSITION_SIDE_LEFT, PA_CHANNEL_POSITION_SIDE_RIGHT, -1))
-        return _("Surround 7.1");
+        return ("Surround 7.1");
 
     return NULL;
 }

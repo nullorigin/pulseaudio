@@ -822,7 +822,7 @@ int pa__init(pa_module *m) {
         u->vendor_name = pa_xstrdup(tmp);
 
     /* add on profile */
-    p = pa_card_profile_new("on", _("On"), 0);
+    p = pa_card_profile_new("on", ("On"), 0);
     pa_hashmap_put(card_new_data.profiles, p->name, p);
 
     /* create the card object */

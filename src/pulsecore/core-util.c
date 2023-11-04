@@ -1788,7 +1788,7 @@ char *pa_get_runtime_dir(void) {
 #ifdef HAVE_GETUID
         struct stat st;
         if (stat(d, &st) == 0 && st.st_uid != getuid()) {
-            pa_log(_("XDG_RUNTIME_DIR (%s) is not owned by us (uid %d), but by uid %d! "
+            pa_log(("XDG_RUNTIME_DIR (%s) is not owned by us (uid %d), but by uid %d! "
                    "(This could e.g. happen if you try to connect to a non-root PulseAudio as a root user, over the native protocol. Don't do that.)"),
                    d, getuid(), st.st_uid);
             goto fail;

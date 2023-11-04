@@ -29,9 +29,6 @@ void pa_init_i18n(void) {
 #ifdef ENABLE_NLS
     PA_ONCE_BEGIN {
 
-        bindtextdomain(GETTEXT_PACKAGE, PULSE_LOCALEDIR);
-        bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-
     } PA_ONCE_END;
 #endif
 }

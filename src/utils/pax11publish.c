@@ -45,9 +45,6 @@ int main(int argc, char *argv[]) {
     enum { DUMP, EXPORT, IMPORT, REMOVE } mode = DUMP;
 
     setlocale(LC_ALL, "");
-#ifdef ENABLE_NLS
-    bindtextdomain(GETTEXT_PACKAGE, PULSE_LOCALEDIR);
-#endif
 
     while ((c = getopt(argc, argv, "deiD:S:O:I:c:hr")) != -1) {
         switch (c) {
@@ -55,7 +52,7 @@ int main(int argc, char *argv[]) {
                 dname = optarg;
                 break;
             case 'h':
-                printf(_("%s [-D display] [-S server] [-O sink] [-I source] [-c file]  [-d|-e|-i|-r]\n\n"
+                printf(("%s [-D display] [-S server] [-O sink] [-I source] [-c file]  [-d|-e|-i|-r]\n\n"
                        " -d    Show current PulseAudio data attached to X11 display (default)\n"
                        " -e    Export local PulseAudio data to X11 display\n"
                        " -i    Import PulseAudio data from X11 display to local environment variables and cookie file.\n"
@@ -88,18 +85,18 @@ int main(int argc, char *argv[]) {
                 server = optarg;
                 break;
             default:
-                fprintf(stderr, _("Failed to parse command line.\n"));
+                fprintf(stderr, ("Failed to parse command line.\n"));
                 goto finish;
         }
     }
 
     if (!(xcb = xcb_connect(dname, &screen))) {
-        pa_log(_("xcb_connect() failed"));
+        pa_log(("xcb_connect() failed"));
         goto finish;
     }
 
     if (xcb_connection_has_error(xcb)) {
-        pa_log(_("xcb_connection_has_error() returned true"));
+        pa_log(("xcb_connection_has_error() returned true"));
         goto finish;
     }
 
@@ -107,13 +104,13 @@ int main(int argc, char *argv[]) {
         case DUMP: {
             char t[1024];
             if (pa_x11_get_prop(xcb, screen, "PULSE_SERVER", t, sizeof(t)))
-                printf(_("Server: %s\n"), t);
+                printf(("Server: %s\n"), t);
             if (pa_x11_get_prop(xcb, screen, "PULSE_SOURCE", t, sizeof(t)))
-                printf(_("Source: %s\n"), t);
+                printf(("Source: %s\n"), t);
             if (pa_x11_get_prop(xcb, screen, "PULSE_SINK", t, sizeof(t)))
-                printf(_("Sink: %s\n"), t);
+                printf(("Sink: %s\n"), t);
             if (pa_x11_get_prop(xcb, screen, "PULSE_COOKIE", t, sizeof(t)))
-                printf(_("Cookie: %s\n"), t);
+                printf(("Cookie: %s\n"), t);
 
             break;
         }
@@ -131,12 +128,12 @@ int main(int argc, char *argv[]) {
                 uint8_t cookie[PA_NATIVE_COOKIE_LENGTH];
                 size_t l;
                 if ((l = pa_parsehex(t, cookie, sizeof(cookie))) != sizeof(cookie)) {
-                    fprintf(stderr, _("Failed to parse cookie data\n"));
+                    fprintf(stderr, ("Failed to parse cookie data\n"));
                     goto finish;
                 }
 
                 if (pa_authkey_save(cookie_file, cookie, l) < 0) {
-                    fprintf(stderr, _("Failed to save cookie data\n"));
+                    fprintf(stderr, ("Failed to save cookie data\n"));
                     goto finish;
                 }
             }
@@ -165,7 +162,7 @@ int main(int argc, char *argv[]) {
             else {
                 char hn[256];
                 if (!pa_get_fqdn(hn, sizeof(hn))) {
-                    fprintf(stderr, _("Failed to get FQDN.\n"));
+                    fprintf(stderr, ("Failed to get FQDN.\n"));
                     goto finish;
                 }
 
@@ -185,7 +182,7 @@ int main(int argc, char *argv[]) {
             pa_client_conf_free(conf);
 
             if (pa_authkey_load(cookie_file, true, cookie, sizeof(cookie)) < 0) {
-                fprintf(stderr, _("Failed to load cookie data\n"));
+                fprintf(stderr, ("Failed to load cookie data\n"));
                 goto finish;
             }
 
@@ -203,7 +200,7 @@ int main(int argc, char *argv[]) {
             break;
 
         default:
-            fprintf(stderr, _("Not yet implemented.\n"));
+            fprintf(stderr, ("Not yet implemented.\n"));
             goto finish;
     }
 
