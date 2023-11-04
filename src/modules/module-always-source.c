@@ -32,7 +32,7 @@
 #include <pulsecore/log.h>
 
 PA_MODULE_AUTHOR("Sebastian Dröge");
-PA_MODULE_DESCRIPTION(_("Always keeps at least one source loaded even if it's a null one"));
+PA_MODULE_DESCRIPTION(("Always keeps at least one source loaded even if it's a null one"));
 PA_MODULE_VERSION(PACKAGE_VERSION);
 PA_MODULE_LOAD_ONCE(true);
 PA_MODULE_USAGE(

@@ -32,7 +32,7 @@
 
 #include "error.h"
 
-const char*pa_strerror(int error) {
+const char* pa_strerror(int error) {
 
     static const char* const errortab[PA_ERR_MAX] = {
         [PA_OK] = N_("OK"),
@@ -72,5 +72,5 @@ const char*pa_strerror(int error) {
     if (error >= PA_ERR_MAX)
         return NULL;
 
-    return _(errortab[error]);
+    return (errortab[error]);
 }

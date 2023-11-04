@@ -37,11 +37,11 @@
 #include <pulsecore/ltdl-helper.h>
 
 PA_MODULE_AUTHOR("Pierre-Louis Bossart");
-PA_MODULE_DESCRIPTION(_("Virtual sink"));
+PA_MODULE_DESCRIPTION(("Virtual sink"));
 PA_MODULE_VERSION(PACKAGE_VERSION);
 PA_MODULE_LOAD_ONCE(false);
 PA_MODULE_USAGE(
-        _("sink_name=<name for the sink> "
+        ("sink_name=<name for the sink> "
           "sink_properties=<properties for the sink> "
           "master=<name of sink to filter> "
           "rate=<sample rate> "

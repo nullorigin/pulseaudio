@@ -65,11 +65,11 @@
 #include <pulsecore/dbus-util.h>
 
 PA_MODULE_AUTHOR("Jason Newton");
-PA_MODULE_DESCRIPTION(_("General Purpose Equalizer"));
+PA_MODULE_DESCRIPTION(("General Purpose Equalizer"));
 PA_MODULE_VERSION(PACKAGE_VERSION);
 PA_MODULE_LOAD_ONCE(false);
 PA_MODULE_USAGE(
-        _("sink_name=<name of the sink> "
+        ("sink_name=<name of the sink> "
           "sink_properties=<properties for the sink> "
           "sink_master=<sink to connect to> "
           "format=<sample format> "
@@ -1094,7 +1094,7 @@ static void sink_input_moving_cb(pa_sink_input *i, pa_sink *dest) {
             char *new_description;
 
             master_description = pa_proplist_gets(dest->proplist, PA_PROP_DEVICE_DESCRIPTION);
-            new_description = pa_sprintf_malloc(_("FFT based equalizer on %s"),
+            new_description = pa_sprintf_malloc(("FFT based equalizer on %s"),
                                                 master_description ? master_description : dest->name);
             pa_sink_set_description(u->sink, new_description);
             pa_xfree(new_description);
@@ -1217,7 +1217,7 @@ int pa__init(pa_module*m) {
 
         master_description = pa_proplist_gets(master->proplist, PA_PROP_DEVICE_DESCRIPTION);
         pa_proplist_setf(sink_data.proplist, PA_PROP_DEVICE_DESCRIPTION,
-                         _("FFT based equalizer on %s"), master_description ? master_description : master->name);
+                         ("FFT based equalizer on %s"), master_description ? master_description : master->name);
         u->automatic_description = true;
     }
 

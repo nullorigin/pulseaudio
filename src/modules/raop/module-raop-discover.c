@@ -292,7 +292,7 @@ static void resolver_cb(
         nicename = pa_xstrdup("RAOP");
 
     if (dm == NULL)
-        dm = pa_xstrdup(_("Unknown device model"));
+        dm = pa_xstrdup(("Unknown device model"));
 
     latency = guess_latency_from_device(dm);
 

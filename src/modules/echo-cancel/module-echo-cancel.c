@@ -56,7 +56,7 @@ PA_MODULE_DESCRIPTION("Echo Cancellation");
 PA_MODULE_VERSION(PACKAGE_VERSION);
 PA_MODULE_LOAD_ONCE(false);
 PA_MODULE_USAGE(
-        _("source_name=<name for the source> "
+        ("source_name=<name for the source> "
           "source_properties=<properties for the source> "
           "source_master=<name of source to filter> "
           "sink_name=<name for the sink> "

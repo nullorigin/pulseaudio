@@ -110,7 +110,7 @@ static const struct option long_options[] = {
 void pa_cmdline_help(const char *argv0) {
     pa_assert(argv0);
 
-    printf(_("%s [options]\n\n"
+    printf(("%s [options]\n\n"
            "COMMANDS:\n"
            "  -h, --help                            Show this help\n"
            "      --version                         Show version\n"
@@ -243,7 +243,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
             case ARG_DAEMONIZE:
             case 'D':
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--daemonize expects boolean argument"));
+                    pa_log(("--daemonize expects boolean argument"));
                     goto fail;
                 }
                 conf->daemonize = !!b;
@@ -251,7 +251,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_FAIL:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--fail expects boolean argument"));
+                    pa_log(("--fail expects boolean argument"));
                     goto fail;
                 }
                 conf->fail = !!b;
@@ -262,7 +262,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
                 if (optarg) {
                     if (pa_daemon_conf_set_log_level(conf, optarg) < 0) {
-                        pa_log(_("--log-level expects log level argument (either numeric in range 0..4 or one of error, warn, notice, info, debug)."));
+                        pa_log(("--log-level expects log level argument (either numeric in range 0..4 or one of error, warn, notice, info, debug)."));
                         goto fail;
                     }
                 } else {
@@ -274,7 +274,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_HIGH_PRIORITY:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--high-priority expects boolean argument"));
+                    pa_log(("--high-priority expects boolean argument"));
                     goto fail;
                 }
                 conf->high_priority = !!b;
@@ -282,7 +282,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_REALTIME:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--realtime expects boolean argument"));
+                    pa_log(("--realtime expects boolean argument"));
                     goto fail;
                 }
                 conf->realtime_scheduling = !!b;
@@ -290,7 +290,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_DISALLOW_MODULE_LOADING:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--disallow-module-loading expects boolean argument"));
+                    pa_log(("--disallow-module-loading expects boolean argument"));
                     goto fail;
                 }
                 conf->disallow_module_loading = !!b;
@@ -298,7 +298,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_DISALLOW_EXIT:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--disallow-exit expects boolean argument"));
+                    pa_log(("--disallow-exit expects boolean argument"));
                     goto fail;
                 }
                 conf->disallow_exit = !!b;
@@ -306,7 +306,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_USE_PID_FILE:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--use-pid-file expects boolean argument"));
+                    pa_log(("--use-pid-file expects boolean argument"));
                     goto fail;
                 }
                 conf->use_pid_file = !!b;
@@ -325,9 +325,9 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
             case ARG_LOG_TARGET:
                 if (pa_daemon_conf_set_log_target(conf, optarg) < 0) {
 #ifdef HAVE_SYSTEMD_JOURNAL
-                    pa_log(_("Invalid log target: use either 'syslog', 'journal', 'stderr' or 'auto' or a valid file name 'file:<path>', 'newfile:<path>'."));
+                    pa_log(("Invalid log target: use either 'syslog', 'journal', 'stderr' or 'auto' or a valid file name 'file:<path>', 'newfile:<path>'."));
 #else
-                    pa_log(_("Invalid log target: use either 'syslog', 'stderr' or 'auto' or a valid file name 'file:<path>', 'newfile:<path>'."));
+                    pa_log(("Invalid log target: use either 'syslog', 'stderr' or 'auto' or a valid file name 'file:<path>', 'newfile:<path>'."));
 #endif
                     goto fail;
                 }
@@ -335,7 +335,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_LOG_TIME:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--log-time expects boolean argument"));
+                    pa_log(("--log-time expects boolean argument"));
                     goto fail;
                 }
                 conf->log_time = !!b;
@@ -343,7 +343,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_LOG_META:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--log-meta expects boolean argument"));
+                    pa_log(("--log-meta expects boolean argument"));
                     goto fail;
                 }
                 conf->log_meta = !!b;
@@ -363,14 +363,14 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_RESAMPLE_METHOD:
                 if (pa_daemon_conf_set_resample_method(conf, optarg) < 0) {
-                    pa_log(_("Invalid resample method '%s'."), optarg);
+                    pa_log(("Invalid resample method '%s'."), optarg);
                     goto fail;
                 }
                 break;
 
             case ARG_SYSTEM:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--system expects boolean argument"));
+                    pa_log(("--system expects boolean argument"));
                     goto fail;
                 }
                 conf->system_instance = !!b;
@@ -378,7 +378,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_NO_CPU_LIMIT:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--no-cpu-limit expects boolean argument"));
+                    pa_log(("--no-cpu-limit expects boolean argument"));
                     goto fail;
                 }
                 conf->no_cpu_limit = !!b;
@@ -386,7 +386,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_DISABLE_SHM:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--disable-shm expects boolean argument"));
+                    pa_log(("--disable-shm expects boolean argument"));
                     goto fail;
                 }
                 conf->disable_shm = !!b;
@@ -394,7 +394,7 @@ int pa_cmdline_parse(pa_daemon_conf *conf, int argc, char *const argv [], int *d
 
             case ARG_ENABLE_MEMFD:
                 if ((b = optarg ? pa_parse_boolean(optarg) : 1) < 0) {
-                    pa_log(_("--enable-memfd expects boolean argument"));
+                    pa_log(("--enable-memfd expects boolean argument"));
                     goto fail;
                 }
                 conf->disable_memfd = !b;

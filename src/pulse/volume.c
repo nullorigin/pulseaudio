@@ -303,7 +303,7 @@ char *pa_cvolume_snprint(char *s, size_t l, const pa_cvolume *c) {
     pa_init_i18n();
 
     if (!pa_cvolume_valid(c)) {
-        pa_snprintf(s, l, _("(invalid)"));
+        pa_snprintf(s, l, ("(invalid)"));
         return s;
     }
 
@@ -329,7 +329,7 @@ char *pa_volume_snprint(char *s, size_t l, pa_volume_t v) {
     pa_init_i18n();
 
     if (!PA_VOLUME_IS_VALID(v)) {
-        pa_snprintf(s, l, _("(invalid)"));
+        pa_snprintf(s, l, ("(invalid)"));
         return s;
     }
 
@@ -349,7 +349,7 @@ char *pa_sw_cvolume_snprint_dB(char *s, size_t l, const pa_cvolume *c) {
     pa_init_i18n();
 
     if (!pa_cvolume_valid(c)) {
-        pa_snprintf(s, l, _("(invalid)"));
+        pa_snprintf(s, l, ("(invalid)"));
         return s;
     }
 
@@ -381,7 +381,7 @@ char *pa_cvolume_snprint_verbose(char *s, size_t l, const pa_cvolume *c, const p
     pa_init_i18n();
 
     if (!pa_cvolume_valid(c)) {
-        pa_snprintf(s, l, _("(invalid)"));
+        pa_snprintf(s, l, ("(invalid)"));
         return s;
     }
 
@@ -421,7 +421,7 @@ char *pa_sw_volume_snprint_dB(char *s, size_t l, pa_volume_t v) {
     pa_init_i18n();
 
     if (!PA_VOLUME_IS_VALID(v)) {
-        pa_snprintf(s, l, _("(invalid)"));
+        pa_snprintf(s, l, ("(invalid)"));
         return s;
     }
 
@@ -440,7 +440,7 @@ char *pa_volume_snprint_verbose(char *s, size_t l, pa_volume_t v, int print_dB) 
     pa_init_i18n();
 
     if (!PA_VOLUME_IS_VALID(v)) {
-        pa_snprintf(s, l, _("(invalid)"));
+        pa_snprintf(s, l, ("(invalid)"));
         return s;
     }
 

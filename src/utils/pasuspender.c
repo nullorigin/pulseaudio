@@ -76,7 +76,7 @@ static void drain(void) {
 static int start_child(void) {
 
     if ((child_pid = fork()) < 0) {
-        fprintf(stderr, _("fork(): %s\n"), strerror(errno));
+        fprintf(stderr, ("fork(): %s\n"), strerror(errno));
         fork_failed = 1;
 
         return -1;
@@ -89,7 +89,7 @@ static int start_child(void) {
 #endif
 
         if (execvp(child_argv[0], child_argv) < 0)
-            fprintf(stderr, _("execvp(): %s\n"), strerror(errno));
+            fprintf(stderr, ("execvp(): %s\n"), strerror(errno));
 
         _exit(1);
 
@@ -108,7 +108,7 @@ static void resume_complete(pa_context *c, int success, void *userdata) {
     n++;
 
     if (!success) {
-        fprintf(stderr, _("Failure to resume: %s\n"), pa_strerror(pa_context_errno(c)));
+        fprintf(stderr, ("Failure to resume: %s\n"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -142,7 +142,7 @@ static void suspend_complete(pa_context *c, int success, void *userdata) {
     n++;
 
     if (!success) {
-        fprintf(stderr, _("Failure to suspend: %s\n"), pa_strerror(pa_context_errno(c)));
+        fprintf(stderr, ("Failure to suspend: %s\n"), pa_strerror(pa_context_errno(c)));
         quit(1);
         return;
     }
@@ -167,7 +167,7 @@ static void context_state_callback(pa_context *c, void *userdata) {
                 pa_operation_unref(pa_context_suspend_sink_by_index(c, PA_INVALID_INDEX, 1, suspend_complete, NULL));
                 pa_operation_unref(pa_context_suspend_source_by_index(c, PA_INVALID_INDEX, 1, suspend_complete, NULL));
             } else {
-                fprintf(stderr, _("WARNING: Sound server is not local, not suspending.\n"));
+                fprintf(stderr, ("WARNING: Sound server is not local, not suspending.\n"));
                 if (start_child() < 0)
                     drain();
             }
@@ -180,7 +180,7 @@ static void context_state_callback(pa_context *c, void *userdata) {
 
         case PA_CONTEXT_FAILED:
         default:
-            fprintf(stderr, _("Connection failure: %s\n"), pa_strerror(pa_context_errno(c)));
+            fprintf(stderr, ("Connection failure: %s\n"), pa_strerror(pa_context_errno(c)));
 
             pa_context_unref(context);
             context = NULL;
@@ -198,7 +198,7 @@ static void context_state_callback(pa_context *c, void *userdata) {
 }
 
 static void sigint_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata) {
-    fprintf(stderr, _("Got SIGINT, exiting.\n"));
+    fprintf(stderr, ("Got SIGINT, exiting.\n"));
     resume();
 }
 
@@ -216,7 +216,7 @@ static void sigchld_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, vo
     if (WIFEXITED(status))
         child_ret = WEXITSTATUS(status);
     else if (WIFSIGNALED(status)) {
-        fprintf(stderr, _("WARNING: Child process terminated by signal %u\n"), WTERMSIG(status));
+        fprintf(stderr, ("WARNING: Child process terminated by signal %u\n"), WTERMSIG(status));
         child_ret = 1;
     }
 
@@ -225,8 +225,8 @@ static void sigchld_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, vo
 
 static void help(const char *argv0) {
 
-    printf(_("%s [options] -- PROGRAM [ARGUMENTS ...]\n\n"
-           "Temporarily suspend PulseAudio while PROGRAM runs.\n\n"    
+    printf(("%s [options] -- PROGRAM [ARGUMENTS ...]\n\n"
+           "Temporarily suspend PulseAudio while PROGRAM runs.\n\n"
            "  -h, --help                            Show this help\n"
            "      --version                         Show version\n"
            "  -s, --server=SERVER                   The name of the server to connect to\n\n"),
@@ -250,9 +250,6 @@ int main(int argc, char *argv[]) {
     };
 
     setlocale(LC_ALL, "");
-#ifdef ENABLE_NLS
-    bindtextdomain(GETTEXT_PACKAGE, PULSE_LOCALEDIR);
-#endif
 
     bn = pa_path_get_filename(argv[0]);
 
@@ -264,7 +261,7 @@ int main(int argc, char *argv[]) {
                 goto quit;
 
             case ARG_VERSION:
-                printf(_("pasuspender %s\n"
+                printf(("pasuspender %s\n"
                          "Compiled with libpulse %s\n"
                          "Linked with libpulse %s\n"),
                        PACKAGE_VERSION,
@@ -293,7 +290,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (!(m = pa_mainloop_new())) {
-        fprintf(stderr, _("pa_mainloop_new() failed.\n"));
+        fprintf(stderr, ("pa_mainloop_new() failed.\n"));
         goto quit;
     }
 
@@ -306,7 +303,7 @@ int main(int argc, char *argv[]) {
 #endif
 
     if (!(context = pa_context_new(mainloop_api, bn))) {
-        fprintf(stderr, _("pa_context_new() failed.\n"));
+        fprintf(stderr, ("pa_context_new() failed.\n"));
         goto quit;
     }
 
@@ -318,7 +315,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (pa_mainloop_run(m, &ret) < 0) {
-        fprintf(stderr, _("pa_mainloop_run() failed.\n"));
+        fprintf(stderr, ("pa_mainloop_run() failed.\n"));
         goto quit;
     }
 

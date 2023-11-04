@@ -54,26 +54,26 @@ static void long_info(const char *name, const char *path, pa_modinfo *i) {
 
     nl = 1;
 
-    printf(_("Name: %s\n"), name);
+    printf(("Name: %s\n"), name);
 
     if (!i->description && !i->version && !i->author && !i->usage)
-        printf(_("No module information available\n"));
+        printf(("No module information available\n"));
     else {
         if (i->version)
-            printf(_("Version: %s\n"), i->version);
+            printf(("Version: %s\n"), i->version);
         if (i->description)
-            printf(_("Description: %s\n"), i->description);
+            printf(("Description: %s\n"), i->description);
         if (i->author)
-            printf(_("Author: %s\n"), i->author);
+            printf(("Author: %s\n"), i->author);
         if (i->usage)
-            printf(_("Usage: %s\n"), i->usage);
-        printf(_("Load Once: %s\n"), pa_yes_no(i->load_once));
+            printf(("Usage: %s\n"), i->usage);
+        printf(("Load Once: %s\n"), pa_yes_no(i->load_once));
         if (i->deprecated)
-            printf(_("DEPRECATION WARNING: %s\n"), i->deprecated);
+            printf(("DEPRECATION WARNING: %s\n"), i->deprecated);
     }
 
     if (path)
-        printf(_("Path: %s\n"), path);
+        printf(("Path: %s\n"), path);
 }
 
 static void show_info(const char *name, const char *path, void (*info)(const char *name, const char *path, pa_modinfo*i)) {

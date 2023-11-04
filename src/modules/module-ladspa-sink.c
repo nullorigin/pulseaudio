@@ -47,11 +47,11 @@
 #include "ladspa.h"
 
 PA_MODULE_AUTHOR("Lennart Poettering");
-PA_MODULE_DESCRIPTION(_("Virtual LADSPA sink"));
+PA_MODULE_DESCRIPTION(("Virtual LADSPA sink"));
 PA_MODULE_VERSION(PACKAGE_VERSION);
 PA_MODULE_LOAD_ONCE(false);
 PA_MODULE_USAGE(
-    _("sink_name=<name for the sink> "
+    ("sink_name=<name for the sink> "
       "sink_properties=<properties for the sink> "
       "sink_input_properties=<properties for the sink input> "
       "master=<name of sink to filter> "

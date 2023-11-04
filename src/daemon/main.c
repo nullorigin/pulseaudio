@@ -262,12 +262,12 @@ static int change_user(void) {
      * afterwards. */
 
     if (!(pw = getpwnam(PA_SYSTEM_USER))) {
-        pa_log(_("Failed to find user '%s'."), PA_SYSTEM_USER);
+        pa_log(("Failed to find user '%s'."), PA_SYSTEM_USER);
         return -1;
     }
 
     if (!(gr = getgrnam(PA_SYSTEM_GROUP))) {
-        pa_log(_("Failed to find group '%s'."), PA_SYSTEM_GROUP);
+        pa_log(("Failed to find group '%s'."), PA_SYSTEM_GROUP);
         return -1;
     }
 
@@ -276,27 +276,27 @@ static int change_user(void) {
                 PA_SYSTEM_GROUP, (unsigned long) gr->gr_gid);
 
     if (pw->pw_gid != gr->gr_gid) {
-        pa_log(_("GID of user '%s' and of group '%s' don't match."), PA_SYSTEM_USER, PA_SYSTEM_GROUP);
+        pa_log(("GID of user '%s' and of group '%s' don't match."), PA_SYSTEM_USER, PA_SYSTEM_GROUP);
         return -1;
     }
 
     if (!pa_streq(pw->pw_dir, PA_SYSTEM_RUNTIME_PATH))
-        pa_log_warn(_("Home directory of user '%s' is not '%s', ignoring."), PA_SYSTEM_USER, PA_SYSTEM_RUNTIME_PATH);
+        pa_log_warn(("Home directory of user '%s' is not '%s', ignoring."), PA_SYSTEM_USER, PA_SYSTEM_RUNTIME_PATH);
 
     if (pa_make_secure_dir(PA_SYSTEM_RUNTIME_PATH, 0755, pw->pw_uid, gr->gr_gid, true) < 0) {
-        pa_log(_("Failed to create '%s': %s"), PA_SYSTEM_RUNTIME_PATH, pa_cstrerror(errno));
+        pa_log(("Failed to create '%s': %s"), PA_SYSTEM_RUNTIME_PATH, pa_cstrerror(errno));
         return -1;
     }
 
     if (pa_make_secure_dir(PA_SYSTEM_STATE_PATH, 0700, pw->pw_uid, gr->gr_gid, true) < 0) {
-        pa_log(_("Failed to create '%s': %s"), PA_SYSTEM_STATE_PATH, pa_cstrerror(errno));
+        pa_log(("Failed to create '%s': %s"), PA_SYSTEM_STATE_PATH, pa_cstrerror(errno));
         return -1;
     }
 
     /* We don't create the config dir here, because we don't need to write to it */
 
     if (initgroups(PA_SYSTEM_USER, gr->gr_gid) != 0) {
-        pa_log(_("Failed to change group list: %s"), pa_cstrerror(errno));
+        pa_log(("Failed to change group list: %s"), pa_cstrerror(errno));
         return -1;
     }
 
@@ -312,7 +312,7 @@ static int change_user(void) {
 #endif
 
     if (r < 0) {
-        pa_log(_("Failed to change GID: %s"), pa_cstrerror(errno));
+        pa_log(("Failed to change GID: %s"), pa_cstrerror(errno));
         return -1;
     }
 
@@ -328,7 +328,7 @@ static int change_user(void) {
 #endif
 
     if (r < 0) {
-        pa_log(_("Failed to change UID: %s"), pa_cstrerror(errno));
+        pa_log(("Failed to change UID: %s"), pa_cstrerror(errno));
         return -1;
     }
 
@@ -357,7 +357,7 @@ static int change_user(void) {
 #else /* HAVE_PWD_H && HAVE_GRP_H */
 
 static int change_user(void) {
-    pa_log(_("System wide mode unsupported on this platform."));
+    pa_log(("System wide mode unsupported on this platform."));
     return -1;
 }
 
@@ -647,7 +647,7 @@ int main(int argc, char *argv[]) {
         goto finish;
 
     if (pa_cmdline_parse(conf, argc, argv, &d) < 0) {
-        pa_log(_("Failed to parse command line."));
+        pa_log(("Failed to parse command line."));
         goto finish;
     }
 
@@ -686,7 +686,7 @@ int main(int argc, char *argv[]) {
     start_server = conf->local_server_type == PA_SERVER_TYPE_USER || (getuid() == 0 && conf->local_server_type == PA_SERVER_TYPE_SYSTEM);
 
     if (!start_server && conf->local_server_type == PA_SERVER_TYPE_SYSTEM) {
-        pa_log_notice(_("System mode refused for non-root user. Only starting the D-Bus server lookup service."));
+        pa_log_notice(("System mode refused for non-root user. Only starting the D-Bus server lookup service."));
         conf->system_instance = false;
     }
 #endif
@@ -785,7 +785,7 @@ int main(int argc, char *argv[]) {
             }
 
             if (pa_pid_file_kill(SIGINT, NULL, "pulseaudio") < 0)
-                pa_log(_("Failed to kill daemon: %s"), pa_cstrerror(errno));
+                pa_log(("Failed to kill daemon: %s"), pa_cstrerror(errno));
             else
                 retval = 0;
 
@@ -814,17 +814,17 @@ int main(int argc, char *argv[]) {
 
 #ifdef HAVE_GETUID
     if (getuid() == 0 && !conf->system_instance)
-        pa_log_warn(_("This program is not intended to be run as root (unless --system is specified)."));
+        pa_log_warn(("This program is not intended to be run as root (unless --system is specified)."));
 #ifndef HAVE_DBUS /* A similar, only a notice worthy check was done earlier, if D-Bus is enabled. */
     else if (getuid() != 0 && conf->system_instance) {
-        pa_log(_("Root privileges required."));
+        pa_log(("Root privileges required."));
         goto finish;
     }
 #endif
 #endif  /* HAVE_GETUID */
 
     if (conf->cmd == PA_CMD_START && conf->system_instance) {
-        pa_log(_("--start not supported for system instances."));
+        pa_log(("--start not supported for system instances."));
         goto finish;
     }
 
@@ -864,29 +864,29 @@ int main(int argc, char *argv[]) {
         }
 
         if (!start_anyway) {
-            pa_log_notice(_("User-configured server at %s, refusing to start/autospawn."), configured_address);
+            pa_log_notice(("User-configured server at %s, refusing to start/autospawn."), configured_address);
             pa_xfree(configured_address);
             retval = 0;
             goto finish;
         }
 
-        pa_log_notice(_("User-configured server at %s, which appears to be local. Probing deeper."), configured_address);
+        pa_log_notice(("User-configured server at %s, which appears to be local. Probing deeper."), configured_address);
         pa_xfree(configured_address);
     }
 
     if (conf->system_instance && !conf->disallow_exit)
-        pa_log_warn(_("Running in system mode, but --disallow-exit not set."));
+        pa_log_warn(("Running in system mode, but --disallow-exit not set."));
 
     if (conf->system_instance && !conf->disallow_module_loading)
-        pa_log_warn(_("Running in system mode, but --disallow-module-loading not set."));
+        pa_log_warn(("Running in system mode, but --disallow-module-loading not set."));
 
     if (conf->system_instance && !conf->disable_shm) {
-        pa_log_notice(_("Running in system mode, forcibly disabling SHM mode."));
+        pa_log_notice(("Running in system mode, forcibly disabling SHM mode."));
         conf->disable_shm = true;
     }
 
     if (conf->system_instance && conf->exit_idle_time >= 0) {
-        pa_log_notice(_("Running in system mode, forcibly disabling exit idle time."));
+        pa_log_notice(("Running in system mode, forcibly disabling exit idle time."));
         conf->exit_idle_time = -1;
     }
 
@@ -919,18 +919,18 @@ int main(int argc, char *argv[]) {
 #endif
 
         if (pa_stdio_acquire() < 0) {
-            pa_log(_("Failed to acquire stdio."));
+            pa_log(("Failed to acquire stdio."));
             goto finish;
         }
 
 #ifdef HAVE_FORK
         if (pipe(daemon_pipe) < 0) {
-            pa_log(_("pipe() failed: %s"), pa_cstrerror(errno));
+            pa_log(("pipe() failed: %s"), pa_cstrerror(errno));
             goto finish;
         }
 
         if ((child = fork()) < 0) {
-            pa_log(_("fork() failed: %s"), pa_cstrerror(errno));
+            pa_log(("fork() failed: %s"), pa_cstrerror(errno));
             pa_close_pipe(daemon_pipe);
             goto finish;
         }
@@ -945,13 +945,13 @@ int main(int argc, char *argv[]) {
             if ((n = pa_loop_read(daemon_pipe[0], &retval, sizeof(retval), NULL)) != sizeof(retval)) {
 
                 if (n < 0)
-                    pa_log(_("read() failed: %s"), pa_cstrerror(errno));
+                    pa_log(("read() failed: %s"), pa_cstrerror(errno));
 
                 retval = 1;
             }
 
             if (retval)
-                pa_log(_("Daemon startup failed."));
+                pa_log(("Daemon startup failed."));
             else
                 pa_log_info("Daemon startup successful.");
 
@@ -984,7 +984,7 @@ int main(int argc, char *argv[]) {
 
 #ifdef HAVE_SETSID
         if (setsid() < 0) {
-            pa_log(_("setsid() failed: %s"), pa_cstrerror(errno));
+            pa_log(("setsid() failed: %s"), pa_cstrerror(errno));
             goto finish;
         }
 #endif
@@ -996,12 +996,12 @@ int main(int argc, char *argv[]) {
          * process group without leader */
 
         if (pipe(daemon_pipe2) < 0) {
-            pa_log(_("pipe() failed: %s"), pa_cstrerror(errno));
+            pa_log(("pipe() failed: %s"), pa_cstrerror(errno));
             goto finish;
         }
 
         if ((child = fork()) < 0) {
-            pa_log(_("fork() failed: %s"), pa_cstrerror(errno));
+            pa_log(("fork() failed: %s"), pa_cstrerror(errno));
             pa_close_pipe(daemon_pipe2);
             goto finish;
         }
@@ -1016,7 +1016,7 @@ int main(int argc, char *argv[]) {
             if ((n = pa_loop_read(daemon_pipe2[0], &retval, sizeof(retval), NULL)) != sizeof(retval)) {
 
                 if (n < 0)
-                    pa_log(_("read() failed: %s"), pa_cstrerror(errno));
+                    pa_log(("read() failed: %s"), pa_cstrerror(errno));
 
                 retval = 1;
             }
@@ -1116,7 +1116,7 @@ int main(int argc, char *argv[]) {
 #endif
 
     if (!(s = pa_machine_id())) {
-        pa_log(_("Failed to get machine ID"));
+        pa_log(("Failed to get machine ID"));
         goto finish;
     }
     pa_log_info("Machine ID is %s.", s);
@@ -1142,7 +1142,7 @@ int main(int argc, char *argv[]) {
     pa_log_info("Running in system mode: %s", pa_yes_no(pa_in_system_mode()));
 
     if (pa_in_system_mode())
-        pa_log_warn(_("OK, so you are running PA in system mode. Please make sure that you actually do want to do that.\n"
+        pa_log_warn(("OK, so you are running PA in system mode. Please make sure that you actually do want to do that.\n"
                       "Please read http://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/WhatIsWrongWithSystemWide/ for an explanation why system mode is usually a bad idea."));
 
     if (conf->use_pid_file) {
@@ -1158,7 +1158,7 @@ int main(int argc, char *argv[]) {
                 goto finish;
             }
 
-            pa_log(_("pa_pid_file_create() failed."));
+            pa_log(("pa_pid_file_create() failed."));
             goto finish;
         }
 
@@ -1190,7 +1190,7 @@ int main(int argc, char *argv[]) {
     if (!(c = pa_core_new(pa_mainloop_get_api(mainloop), !conf->disable_shm,
                           !conf->disable_shm && !conf->disable_memfd && pa_memfd_is_locally_supported(),
                           conf->shm_size))) {
-        pa_log(_("pa_core_new() failed."));
+        pa_log(("pa_core_new() failed."));
         goto finish;
     }
 
@@ -1265,19 +1265,19 @@ int main(int argc, char *argv[]) {
 
         if (r >= 0) {
             r = pa_cli_command_execute(c, conf->script_commands, buf, &conf->fail);
-            command_source = _("command line arguments");
+            command_source = ("command line arguments");
         }
 
         pa_log_error("%s", s = pa_strbuf_to_string_free(buf));
         pa_xfree(s);
 
         if (r < 0 && conf->fail) {
-            pa_log(_("Failed to initialize daemon due to errors while executing startup commands. Source of commands: %s"), command_source);
+            pa_log(("Failed to initialize daemon due to errors while executing startup commands. Source of commands: %s"), command_source);
             goto finish;
         }
 
         if (!c->modules || pa_idxset_size(c->modules) == 0) {
-            pa_log(_("Daemon startup without any loaded modules, refusing to work."));
+            pa_log(("Daemon startup without any loaded modules, refusing to work."));
             goto finish;
         }
 #ifdef HAVE_DBUS

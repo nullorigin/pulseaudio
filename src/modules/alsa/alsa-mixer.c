@@ -290,7 +290,7 @@ static const char *lookup_description(const char *key, const struct description_
 
     for (i = 0; i < n; i++)
         if (pa_streq(dm[i].key, key))
-            return _(dm[i].description);
+            return (dm[i].description);
 
     return NULL;
 }
@@ -2705,28 +2705,28 @@ static int setting_select(pa_alsa_setting *s, snd_mixer_t *m) {
 
 static int option_verify(pa_alsa_option *o) {
     static const struct description_map well_known_descriptions[] = {
-        { "input",                     N_("Input") },
-        { "input-docking",             N_("Docking Station Input") },
-        { "input-docking-microphone",  N_("Docking Station Microphone") },
-        { "input-docking-linein",      N_("Docking Station Line In") },
-        { "input-linein",              N_("Line In") },
-        { "input-microphone",          N_("Microphone") },
-        { "input-microphone-front",    N_("Front Microphone") },
-        { "input-microphone-rear",     N_("Rear Microphone") },
-        { "input-microphone-external", N_("External Microphone") },
-        { "input-microphone-internal", N_("Internal Microphone") },
-        { "input-radio",               N_("Radio") },
-        { "input-video",               N_("Video") },
-        { "input-agc-on",              N_("Automatic Gain Control") },
-        { "input-agc-off",             N_("No Automatic Gain Control") },
-        { "input-boost-on",            N_("Boost") },
-        { "input-boost-off",           N_("No Boost") },
-        { "output-amplifier-on",       N_("Amplifier") },
-        { "output-amplifier-off",      N_("No Amplifier") },
-        { "output-bass-boost-on",      N_("Bass Boost") },
-        { "output-bass-boost-off",     N_("No Bass Boost") },
-        { "output-speaker",            N_("Speaker") },
-        { "output-headphones",         N_("Headphones") }
+        { "input",                     ("Input") },
+        { "input-docking",             ("Docking Station Input") },
+        { "input-docking-microphone",  ("Docking Station Microphone") },
+        { "input-docking-linein",      ("Docking Station Line In") },
+        { "input-linein",              ("Line In") },
+        { "input-microphone",          ("Microphone") },
+        { "input-microphone-front",    ("Front Microphone") },
+        { "input-microphone-rear",     ("Rear Microphone") },
+        { "input-microphone-external", ("External Microphone") },
+        { "input-microphone-internal", ("Internal Microphone") },
+        { "input-radio",               ("Radio") },
+        { "input-video",               ("Video") },
+        { "input-agc-on",              ("Automatic Gain Control") },
+        { "input-agc-off",             ("No Automatic Gain Control") },
+        { "input-boost-on",            ("Boost") },
+        { "input-boost-off",           ("No Boost") },
+        { "output-amplifier-on",       ("Amplifier") },
+        { "output-amplifier-off",      ("No Amplifier") },
+        { "output-bass-boost-on",      ("Bass Boost") },
+        { "output-bass-boost-off",     ("No Bass Boost") },
+        { "output-speaker",            ("Speaker") },
+        { "output-headphones",         ("Headphones") }
     };
     char buf[64];
 
@@ -2793,33 +2793,33 @@ static int element_verify(pa_alsa_element *e) {
 
 static int path_verify(pa_alsa_path *p) {
     static const struct description2_map well_known_descriptions[] = {
-        { "analog-input",                     N_("Analog Input"),                 PA_DEVICE_PORT_TYPE_ANALOG },
-        { "analog-input-microphone",          N_("Microphone"),                   PA_DEVICE_PORT_TYPE_MIC },
-        { "analog-input-microphone-front",    N_("Front Microphone"),             PA_DEVICE_PORT_TYPE_MIC },
-        { "analog-input-microphone-rear",     N_("Rear Microphone"),              PA_DEVICE_PORT_TYPE_MIC },
-        { "analog-input-microphone-dock",     N_("Dock Microphone"),              PA_DEVICE_PORT_TYPE_MIC },
-        { "analog-input-microphone-internal", N_("Internal Microphone"),          PA_DEVICE_PORT_TYPE_MIC },
-        { "analog-input-microphone-headset",  N_("Headset Microphone"),           PA_DEVICE_PORT_TYPE_HEADSET },
-        { "analog-input-linein",              N_("Line In"),                      PA_DEVICE_PORT_TYPE_LINE },
-        { "analog-input-radio",               N_("Radio"),                        PA_DEVICE_PORT_TYPE_RADIO },
-        { "analog-input-video",               N_("Video"),                        PA_DEVICE_PORT_TYPE_VIDEO },
-        { "analog-output",                    N_("Analog Output"),                PA_DEVICE_PORT_TYPE_ANALOG },
-        { "analog-output-headphones",         N_("Headphones"),                   PA_DEVICE_PORT_TYPE_HEADPHONES },
-        { "analog-output-headphones-2",       N_("Headphones 2"),                 PA_DEVICE_PORT_TYPE_HEADPHONES },
-        { "analog-output-headphones-mono",    N_("Headphones Mono Output"),       PA_DEVICE_PORT_TYPE_HEADPHONES },
-        { "analog-output-lineout",            N_("Line Out"),                     PA_DEVICE_PORT_TYPE_LINE },
-        { "analog-output-mono",               N_("Analog Mono Output"),           PA_DEVICE_PORT_TYPE_ANALOG },
-        { "analog-output-speaker",            N_("Speakers"),                     PA_DEVICE_PORT_TYPE_SPEAKER },
-        { "hdmi-output",                      N_("HDMI / DisplayPort"),           PA_DEVICE_PORT_TYPE_HDMI },
-        { "iec958-stereo-output",             N_("Digital Output (S/PDIF)"),      PA_DEVICE_PORT_TYPE_SPDIF },
-        { "iec958-stereo-input",              N_("Digital Input (S/PDIF)"),       PA_DEVICE_PORT_TYPE_SPDIF },
-        { "multichannel-input",               N_("Multichannel Input"),           PA_DEVICE_PORT_TYPE_LINE },
-        { "multichannel-output",              N_("Multichannel Output"),          PA_DEVICE_PORT_TYPE_LINE },
-        { "steelseries-arctis-output-game-common", N_("Game Output"),             PA_DEVICE_PORT_TYPE_HEADSET },
-        { "steelseries-arctis-output-chat-common", N_("Chat Output"),             PA_DEVICE_PORT_TYPE_HEADSET },
-        { "analog-chat-output",               N_("Chat Output"),                  PA_DEVICE_PORT_TYPE_HEADSET },
-        { "analog-chat-input",                N_("Chat Input"),                   PA_DEVICE_PORT_TYPE_HEADSET },
-        { "virtual-surround-7.1",             N_("Virtual Surround 7.1"),         PA_DEVICE_PORT_TYPE_HEADPHONES },
+        { "analog-input",                     ("Analog Input"),                 PA_DEVICE_PORT_TYPE_ANALOG },
+        { "analog-input-microphone",          ("Microphone"),                   PA_DEVICE_PORT_TYPE_MIC },
+        { "analog-input-microphone-front",    ("Front Microphone"),             PA_DEVICE_PORT_TYPE_MIC },
+        { "analog-input-microphone-rear",     ("Rear Microphone"),              PA_DEVICE_PORT_TYPE_MIC },
+        { "analog-input-microphone-dock",     ("Dock Microphone"),              PA_DEVICE_PORT_TYPE_MIC },
+        { "analog-input-microphone-internal", ("Internal Microphone"),          PA_DEVICE_PORT_TYPE_MIC },
+        { "analog-input-microphone-headset",  ("Headset Microphone"),           PA_DEVICE_PORT_TYPE_HEADSET },
+        { "analog-input-linein",              ("Line In"),                      PA_DEVICE_PORT_TYPE_LINE },
+        { "analog-input-radio",               ("Radio"),                        PA_DEVICE_PORT_TYPE_RADIO },
+        { "analog-input-video",               ("Video"),                        PA_DEVICE_PORT_TYPE_VIDEO },
+        { "analog-output",                    ("Analog Output"),                PA_DEVICE_PORT_TYPE_ANALOG },
+        { "analog-output-headphones",         ("Headphones"),                   PA_DEVICE_PORT_TYPE_HEADPHONES },
+        { "analog-output-headphones-2",       ("Headphones 2"),                 PA_DEVICE_PORT_TYPE_HEADPHONES },
+        { "analog-output-headphones-mono",    ("Headphones Mono Output"),       PA_DEVICE_PORT_TYPE_HEADPHONES },
+        { "analog-output-lineout",            ("Line Out"),                     PA_DEVICE_PORT_TYPE_LINE },
+        { "analog-output-mono",               ("Analog Mono Output"),           PA_DEVICE_PORT_TYPE_ANALOG },
+        { "analog-output-speaker",            ("Speakers"),                     PA_DEVICE_PORT_TYPE_SPEAKER },
+        { "hdmi-output",                      ("HDMI / DisplayPort"),           PA_DEVICE_PORT_TYPE_HDMI },
+        { "iec958-stereo-output",             ("Digital Output (S/PDIF)"),      PA_DEVICE_PORT_TYPE_SPDIF },
+        { "iec958-stereo-input",              ("Digital Input (S/PDIF)"),       PA_DEVICE_PORT_TYPE_SPDIF },
+        { "multichannel-input",               ("Multichannel Input"),           PA_DEVICE_PORT_TYPE_LINE },
+        { "multichannel-output",              ("Multichannel Output"),          PA_DEVICE_PORT_TYPE_LINE },
+        { "steelseries-arctis-output-game-common", ("Game Output"),             PA_DEVICE_PORT_TYPE_HEADSET },
+        { "steelseries-arctis-output-chat-common", ("Chat Output"),             PA_DEVICE_PORT_TYPE_HEADSET },
+        { "analog-chat-output",               ("Chat Output"),                  PA_DEVICE_PORT_TYPE_HEADSET },
+        { "analog-chat-input",                ("Chat Input"),                   PA_DEVICE_PORT_TYPE_HEADSET },
+        { "virtual-surround-7.1",             ("Virtual Surround 7.1"),         PA_DEVICE_PORT_TYPE_HEADPHONES },
     };
 
     pa_alsa_element *e;
@@ -2838,7 +2838,7 @@ static int path_verify(pa_alsa_path *p) {
         if (p->device_port_type == PA_DEVICE_PORT_TYPE_UNKNOWN)
             p->device_port_type = map->type;
         if (!p->description)
-            p->description = pa_xstrdup(_(map->description));
+            p->description = pa_xstrdup((map->description));
     }
 
     if (!p->description) {
@@ -4566,42 +4566,42 @@ static void mapping_paths_probe(pa_alsa_mapping *m, pa_alsa_profile *profile,
 static int mapping_verify(pa_alsa_mapping *m, const pa_channel_map *bonus) {
 
     static const struct description_map well_known_descriptions[] = {
-        { "analog-mono",            N_("Analog Mono") },
-        { "analog-mono-left",       N_("Analog Mono (Left)") },
-        { "analog-mono-right",      N_("Analog Mono (Right)") },
-        { "analog-stereo",          N_("Analog Stereo") },
-        { "mono-fallback",          N_("Mono") },
-        { "stereo-fallback",        N_("Stereo") },
+        { "analog-mono",            ("Analog Mono") },
+        { "analog-mono-left",       ("Analog Mono (Left)") },
+        { "analog-mono-right",      ("Analog Mono (Right)") },
+        { "analog-stereo",          ("Analog Stereo") },
+        { "mono-fallback",          ("Mono") },
+        { "stereo-fallback",        ("Stereo") },
         /* Note: Not translated to "Analog Stereo Input", because the source
          * name gets "Input" appended to it automatically, so adding "Input"
          * here would lead to the source name to become "Analog Stereo Input
          * Input". The same logic applies to analog-stereo-output,
          * multichannel-input and multichannel-output. */
-        { "analog-stereo-input",    N_("Analog Stereo") },
-        { "analog-stereo-output",   N_("Analog Stereo") },
-        { "analog-stereo-headset",  N_("Headset") },
-        { "analog-stereo-speakerphone",  N_("Speakerphone") },
-        { "multichannel-input",     N_("Multichannel") },
-        { "multichannel-output",    N_("Multichannel") },
-        { "analog-surround-21",     N_("Analog Surround 2.1") },
-        { "analog-surround-30",     N_("Analog Surround 3.0") },
-        { "analog-surround-31",     N_("Analog Surround 3.1") },
-        { "analog-surround-40",     N_("Analog Surround 4.0") },
-        { "analog-surround-41",     N_("Analog Surround 4.1") },
-        { "analog-surround-50",     N_("Analog Surround 5.0") },
-        { "analog-surround-51",     N_("Analog Surround 5.1") },
-        { "analog-surround-61",     N_("Analog Surround 6.0") },
-        { "analog-surround-61",     N_("Analog Surround 6.1") },
-        { "analog-surround-70",     N_("Analog Surround 7.0") },
-        { "analog-surround-71",     N_("Analog Surround 7.1") },
-        { "iec958-stereo",          N_("Digital Stereo (IEC958)") },
-        { "iec958-ac3-surround-40", N_("Digital Surround 4.0 (IEC958/AC3)") },
-        { "iec958-ac3-surround-51", N_("Digital Surround 5.1 (IEC958/AC3)") },
-        { "iec958-dts-surround-51", N_("Digital Surround 5.1 (IEC958/DTS)") },
-        { "hdmi-stereo",            N_("Digital Stereo (HDMI)") },
-        { "hdmi-surround-51",       N_("Digital Surround 5.1 (HDMI)") },
-        { "gaming-headset-chat",    N_("Chat") },
-        { "gaming-headset-game",    N_("Game") },
+        { "analog-stereo-input",    ("Analog Stereo") },
+        { "analog-stereo-output",   ("Analog Stereo") },
+        { "analog-stereo-headset",  ("Headset") },
+        { "analog-stereo-speakerphone",  ("Speakerphone") },
+        { "multichannel-input",     ("Multichannel") },
+        { "multichannel-output",    ("Multichannel") },
+        { "analog-surround-21",     ("Analog Surround 2.1") },
+        { "analog-surround-30",     ("Analog Surround 3.0") },
+        { "analog-surround-31",     ("Analog Surround 3.1") },
+        { "analog-surround-40",     ("Analog Surround 4.0") },
+        { "analog-surround-41",     ("Analog Surround 4.1") },
+        { "analog-surround-50",     ("Analog Surround 5.0") },
+        { "analog-surround-51",     ("Analog Surround 5.1") },
+        { "analog-surround-61",     ("Analog Surround 6.0") },
+        { "analog-surround-61",     ("Analog Surround 6.1") },
+        { "analog-surround-70",     ("Analog Surround 7.0") },
+        { "analog-surround-71",     ("Analog Surround 7.1") },
+        { "iec958-stereo",          ("Digital Stereo (IEC958)") },
+        { "iec958-ac3-surround-40", ("Digital Surround 4.0 (IEC958/AC3)") },
+        { "iec958-ac3-surround-51", ("Digital Surround 5.1 (IEC958/AC3)") },
+        { "iec958-dts-surround-51", ("Digital Surround 5.1 (IEC958/DTS)") },
+        { "hdmi-stereo",            ("Digital Stereo (HDMI)") },
+        { "hdmi-surround-51",       ("Digital Surround 5.1 (HDMI)") },
+        { "gaming-headset-chat",    ("Chat") },
+        { "gaming-headset-game",    ("Game") },
     };
     const char *description_key = m->description_key ? m->description_key : m->name;
 
@@ -4735,15 +4735,15 @@ static void profile_set_add_auto(pa_alsa_profile_set *ps) {
 static int profile_verify(pa_alsa_profile *p) {
 
     static const struct description_map well_known_descriptions[] = {
-        { "output:analog-mono+input:analog-mono",     N_("Analog Mono Duplex") },
-        { "output:analog-stereo+input:analog-stereo", N_("Analog Stereo Duplex") },
-        { "output:analog-stereo-headset+input:analog-stereo-headset", N_("Headset") },
-        { "output:analog-stereo-speakerphone+input:analog-stereo-speakerphone", N_("Speakerphone") },
-        { "output:iec958-stereo+input:iec958-stereo", N_("Digital Stereo Duplex (IEC958)") },
-        { "output:multichannel-output+input:multichannel-input", N_("Multichannel Duplex") },
-        { "output:unknown-stereo+input:unknown-stereo", N_("Stereo Duplex") },
-        { "output:analog-output-surround71+output:analog-output-chat+input:analog-input", N_("Mono Chat + 7.1 Surround") },
-        { "off",                                      N_("Off") }
+        { "output:analog-mono+input:analog-mono",     ("Analog Mono Duplex") },
+        { "output:analog-stereo+input:analog-stereo", ("Analog Stereo Duplex") },
+        { "output:analog-stereo-headset+input:analog-stereo-headset", ("Headset") },
+        { "output:analog-stereo-speakerphone+input:analog-stereo-speakerphone", ("Speakerphone") },
+        { "output:iec958-stereo+input:iec958-stereo", ("Digital Stereo Duplex (IEC958)") },
+        { "output:multichannel-output+input:multichannel-input", ("Multichannel Duplex") },
+        { "output:unknown-stereo+input:unknown-stereo", ("Stereo Duplex") },
+        { "output:analog-output-surround71+output:analog-output-chat+input:analog-input", ("Mono Chat + 7.1 Surround") },
+        { "off",                                      ("Off") }
     };
     const char *description_key = p->description_key ? p->description_key : p->name;
 
@@ -4843,7 +4843,7 @@ static int profile_verify(pa_alsa_profile *p) {
                 if (!pa_strbuf_isempty(sb))
                     pa_strbuf_puts(sb, " + ");
 
-                pa_strbuf_printf(sb, _("%s Output"), m->description);
+                pa_strbuf_printf(sb, ("%s Output"), m->description);
             }
 
         if (p->input_mappings)
@@ -4851,7 +4851,7 @@ static int profile_verify(pa_alsa_profile *p) {
                 if (!pa_strbuf_isempty(sb))
                     pa_strbuf_puts(sb, " + ");
 
-                pa_strbuf_printf(sb, _("%s Input"), m->description);
+                pa_strbuf_printf(sb, ("%s Input"), m->description);
             }
 
         p->description = pa_strbuf_to_string_free(sb);

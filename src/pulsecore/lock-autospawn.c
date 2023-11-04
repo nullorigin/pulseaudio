@@ -138,7 +138,7 @@ static void unref(bool after_fork) {
             char *lf;
 
             if (!(lf = pa_runtime_path(AUTOSPAWN_LOCK)))
-                pa_log_warn(_("Cannot access autospawn lock."));
+                pa_log_warn(("Cannot access autospawn lock."));
 
             pa_unlock_lockfile(lf, lock_fd);
             pa_xfree(lf);
@@ -224,7 +224,7 @@ static void thread_func(void *u) {
 #endif
 
     if (!(lf = pa_runtime_path(AUTOSPAWN_LOCK))) {
-        pa_log_warn(_("Cannot access autospawn lock."));
+        pa_log_warn(("Cannot access autospawn lock."));
         goto fail;
     }
 

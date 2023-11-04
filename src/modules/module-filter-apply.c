@@ -44,7 +44,7 @@ PA_MODULE_AUTHOR("Colin Guthrie");
 PA_MODULE_DESCRIPTION("Load filter sinks automatically when needed");
 PA_MODULE_VERSION(PACKAGE_VERSION);
 PA_MODULE_LOAD_ONCE(true);
-PA_MODULE_USAGE(_("autoclean=<automatically unload unused filters?>"));
+PA_MODULE_USAGE(("autoclean=<automatically unload unused filters?>"));
 
 static const char* const valid_modargs[] = {
     "autoclean",

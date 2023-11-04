@@ -146,7 +146,7 @@ pa_reserve_wrapper* pa_reserve_wrapper_get(pa_core *c, const char *device_name) 
                  &r->device,
                  pa_dbus_connection_get(r->connection),
                  device_name,
-                 _("PulseAudio Sound Server"),
+                 ("PulseAudio Sound Server"),
                  0,
                  request_cb,
                  NULL)) < 0) {

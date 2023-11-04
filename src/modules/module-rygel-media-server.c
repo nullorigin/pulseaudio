@@ -503,8 +503,8 @@ static void append_sink_or_source_container_mediaobject2_properties(DBusMessage 
     append_property_dict_entry_object(r, sub, "Path", path);
     append_property_dict_entry_string(r, sub, "DisplayName",
                                       pa_streq(path, OBJECT_SINKS) ?
-                                      _("Output Devices") :
-                                      _("Input Devices"));
+                                      ("Output Devices") :
+                                      ("Input Devices"));
 }
 
 static void append_sink_or_source_container_properties(
@@ -541,8 +541,8 @@ static void append_sink_or_source_container_properties(
             else if (pa_streq(property_name, "DisplayName")) {
                 append_property_dict_entry_string(r, &sub, "DisplayName",
                                                   pa_streq(path, OBJECT_SINKS) ?
-                                                  _("Output Devices") :
-                                                  _("Input Devices"));
+                                                  ("Output Devices") :
+                                                  ("Input Devices"));
             }
             else if (pa_streq(property_name, "ChildCount")) {
                 append_property_dict_entry_unsigned(r, &sub, "ChildCount", get_sinks_or_sources_count(path, user_data));
@@ -900,8 +900,8 @@ static DBusHandlerResult sinks_and_sources_handler(DBusConnection *c, DBusMessag
             append_variant_string(r,
                                   NULL,
                                   pa_streq(path, OBJECT_SINKS) ?
-                                  _("Output Devices") :
-                                  _("Input Devices"));
+                                  ("Output Devices") :
+                                  ("Input Devices"));
 
         } else if (message_is_property_get_all(m, "org.gnome.UPnP.MediaObject2")) {
             DBusMessageIter iter, sub;
@@ -1058,7 +1058,7 @@ int pa__init(pa_module *m) {
     if ((t = pa_modargs_get_value(ma, "display_name", NULL)))
         u->display_name = pa_utf8_filter(t);
     else
-        u->display_name = pa_xstrdup(_("Audio on @HOSTNAME@"));
+        u->display_name = pa_xstrdup(("Audio on @HOSTNAME@"));
 
     u->source_new_slot = pa_hook_connect(&m->core->hooks[PA_CORE_HOOK_SOURCE_PUT], PA_HOOK_LATE, (pa_hook_cb_t) source_new_or_unlink_cb, u);
     u->source_unlink_slot = pa_hook_connect(&m->core->hooks[PA_CORE_HOOK_SOURCE_UNLINK], PA_HOOK_LATE, (pa_hook_cb_t) source_new_or_unlink_cb, u);

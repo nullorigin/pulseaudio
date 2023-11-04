@@ -72,7 +72,7 @@ static lt_module bind_now_open(lt_user_data d, const char *fname, lt_dladvise ad
     pa_assert(fname);
 
     if (!(m = dlopen(fname, PA_BIND_NOW))) {
-        pa_log(_("Failed to open module %s: %s"), fname, dlerror());
+        pa_log(("Failed to open module %s: %s"), fname, dlerror());
         lt_dlseterror(LT_ERROR_CANNOT_OPEN);
         return NULL;
     }
@@ -123,12 +123,12 @@ void pa_ltdl_init(void) {
         return;
 
     if (!(dlopen_loader = lt_dlloader_find((char*) "lt_dlopen"))) {
-        pa_log_warn(_("Failed to find original lt_dlopen loader."));
+        pa_log_warn(("Failed to find original lt_dlopen loader."));
         return;
     }
 
     if (!(bindnow_loader = malloc(sizeof(lt_dlvtable)))) {
-        pa_log_error(_("Failed to allocate new dl loader."));
+        pa_log_error(("Failed to allocate new dl loader."));
         return;
     }
 
@@ -141,7 +141,7 @@ void pa_ltdl_init(void) {
 
     /* Add our BIND_NOW loader as the default module loader. */
     if (lt_dlloader_add(bindnow_loader) != 0) {
-        pa_log_warn(_("Failed to add bind-now-loader."));
+        pa_log_warn(("Failed to add bind-now-loader."));
         free(bindnow_loader);
         bindnow_loader = NULL;
     }

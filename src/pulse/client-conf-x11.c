@@ -58,12 +58,12 @@ int pa_client_conf_from_x11(pa_client_conf *c) {
         goto finish;
 
     if (!(xcb = xcb_connect(dname, NULL))) {
-        pa_log(_("xcb_connect() failed"));
+        pa_log(("xcb_connect() failed"));
         goto finish;
     }
 
     if (xcb_connection_has_error(xcb)) {
-        pa_log(_("xcb_connection_has_error() returned true"));
+        pa_log(("xcb_connection_has_error() returned true"));
         goto finish;
     }
 
@@ -99,7 +99,7 @@ int pa_client_conf_from_x11(pa_client_conf *c) {
 
     if (pa_x11_get_prop(xcb, screen, "PULSE_COOKIE", t, sizeof(t))) {
         if (pa_parsehex(t, c->cookie_from_x11, sizeof(c->cookie_from_x11)) != sizeof(c->cookie_from_x11)) {
-            pa_log(_("Failed to parse cookie data"));
+            pa_log(("Failed to parse cookie data"));
             goto finish;
         }
 

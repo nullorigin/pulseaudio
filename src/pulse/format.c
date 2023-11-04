@@ -120,7 +120,7 @@ char *pa_format_info_snprint(char *s, size_t l, const pa_format_info *f) {
     pa_init_i18n();
 
     if (!pa_format_info_valid(f))
-        pa_snprintf(s, l, _("(invalid)"));
+        pa_snprintf(s, l, ("(invalid)"));
     else {
         tmp = pa_proplist_to_string_sep(f->plist, "  ");
         if (tmp[0])

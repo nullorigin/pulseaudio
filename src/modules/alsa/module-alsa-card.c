@@ -194,7 +194,7 @@ static void add_disabled_profile(pa_hashmap *profiles) {
     pa_card_profile *p;
     struct profile_data *d;
 
-    p = pa_card_profile_new("off", _("Off"), sizeof(struct profile_data));
+    p = pa_card_profile_new("off", ("Off"), sizeof(struct profile_data));
 
     d = PA_CARD_PROFILE_DATA(p);
     d->profile = NULL;

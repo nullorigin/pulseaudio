@@ -34,11 +34,11 @@ const char *pa_direction_to_string(pa_direction_t direction) {
     pa_init_i18n();
 
     if (direction == PA_DIRECTION_INPUT)
-        return _("input");
+        return ("input");
     if (direction == PA_DIRECTION_OUTPUT)
-        return _("output");
+        return ("output");
     if (direction == (PA_DIRECTION_INPUT | PA_DIRECTION_OUTPUT))
-        return _("bidirectional");
+        return ("bidirectional");
 
-    return _("invalid");
+    return ("invalid");
 }

@@ -1968,65 +1968,65 @@ static void create_card_ports(struct userdata *u, pa_hashmap *ports) {
     pa_assert(u->device);
 
     name_prefix = "unknown";
-    input_description = _("Bluetooth Input");
-    output_description = _("Bluetooth Output");
+    input_description = ("Bluetooth Input");
+    output_description = ("Bluetooth Output");
     input_type = output_type = PA_DEVICE_PORT_TYPE_BLUETOOTH;
 
     switch (form_factor_from_class(u->device->class_of_device)) {
         case PA_BLUETOOTH_FORM_FACTOR_HEADSET:
             name_prefix = "headset";
-            input_description = output_description = _("Headset");
+            input_description = output_description = ("Headset");
             input_type = output_type = PA_DEVICE_PORT_TYPE_HEADSET;
             break;
 
         case PA_BLUETOOTH_FORM_FACTOR_HANDSFREE:
             name_prefix = "handsfree";
-            input_description = output_description = _("Handsfree");
+            input_description = output_description = ("Handsfree");
             input_type = output_type = PA_DEVICE_PORT_TYPE_HANDSFREE;
             break;
 
         case PA_BLUETOOTH_FORM_FACTOR_MICROPHONE:
             name_prefix = "microphone";
-            input_description = _("Microphone");
-            output_description = _("Bluetooth Output");
+            input_description = ("Microphone");
+            output_description = ("Bluetooth Output");
             input_type = PA_DEVICE_PORT_TYPE_MIC;
             break;
 
         case PA_BLUETOOTH_FORM_FACTOR_SPEAKER:
             name_prefix = "speaker";
-            input_description = _("Bluetooth Input");
-            output_description = _("Speaker");
+            input_description = ("Bluetooth Input");
+            output_description = ("Speaker");
             output_type = PA_DEVICE_PORT_TYPE_SPEAKER;
             break;
 
         case PA_BLUETOOTH_FORM_FACTOR_HEADPHONE:
             name_prefix = "headphone";
-            input_description = _("Bluetooth Input");
-            output_description = _("Headphone");
+            input_description = ("Bluetooth Input");
+            output_description = ("Headphone");
             output_type = PA_DEVICE_PORT_TYPE_HEADPHONES;
             break;
 
         case PA_BLUETOOTH_FORM_FACTOR_PORTABLE:
             name_prefix = "portable";
-            input_description = output_description = _("Portable");
+            input_description = output_description = ("Portable");
             input_type = output_type = PA_DEVICE_PORT_TYPE_PORTABLE;
             break;
 
         case PA_BLUETOOTH_FORM_FACTOR_CAR:
             name_prefix = "car";
-            input_description = output_description = _("Car");
+            input_description = output_description = ("Car");
             input_type = output_type = PA_DEVICE_PORT_TYPE_CAR;
             break;
 
         case PA_BLUETOOTH_FORM_FACTOR_HIFI:
             name_prefix = "hifi";
-            input_description = output_description = _("HiFi");
+            input_description = output_description = ("HiFi");
             input_type = output_type = PA_DEVICE_PORT_TYPE_HIFI;
             break;
 
         case PA_BLUETOOTH_FORM_FACTOR_PHONE:
             name_prefix = "phone";
-            input_description = output_description = _("Phone");
+            input_description = output_description = ("Phone");
             input_type = output_type = PA_DEVICE_PORT_TYPE_PHONE;
             break;
 
@@ -2073,7 +2073,7 @@ static pa_card_profile *create_card_profile(struct userdata *u, pa_bluetooth_pro
 
     switch (profile) {
     case PA_BLUETOOTH_PROFILE_A2DP_SINK:
-        cp = pa_card_profile_new(name, _("High Fidelity Playback (A2DP Sink)"), sizeof(pa_bluetooth_profile_t));
+        cp = pa_card_profile_new(name, ("High Fidelity Playback (A2DP Sink)"), sizeof(pa_bluetooth_profile_t));
         cp->priority = 40;
         cp->n_sinks = 1;
         cp->n_sources = 0;
@@ -2085,7 +2085,7 @@ static pa_card_profile *create_card_profile(struct userdata *u, pa_bluetooth_pro
         break;
 
     case PA_BLUETOOTH_PROFILE_A2DP_SOURCE:
-        cp = pa_card_profile_new(name, _("High Fidelity Capture (A2DP Source)"), sizeof(pa_bluetooth_profile_t));
+        cp = pa_card_profile_new(name, ("High Fidelity Capture (A2DP Source)"), sizeof(pa_bluetooth_profile_t));
         cp->priority = 20;
         cp->n_sinks = 0;
         cp->n_sources = 1;
@@ -2097,7 +2097,7 @@ static pa_card_profile *create_card_profile(struct userdata *u, pa_bluetooth_pro
         break;
 
     case PA_BLUETOOTH_PROFILE_HSP_HS:
-        cp = pa_card_profile_new(name, _("Headset Head Unit (HSP)"), sizeof(pa_bluetooth_profile_t));
+        cp = pa_card_profile_new(name, ("Headset Head Unit (HSP)"), sizeof(pa_bluetooth_profile_t));
         cp->priority = 30;
         cp->n_sinks = 1;
         cp->n_sources = 1;
@@ -2110,7 +2110,7 @@ static pa_card_profile *create_card_profile(struct userdata *u, pa_bluetooth_pro
         break;
 
     case PA_BLUETOOTH_PROFILE_HSP_AG:
-        cp = pa_card_profile_new(name, _("Headset Audio Gateway (HSP)"), sizeof(pa_bluetooth_profile_t));
+        cp = pa_card_profile_new(name, ("Headset Audio Gateway (HSP)"), sizeof(pa_bluetooth_profile_t));
         cp->priority = 10;
         cp->n_sinks = 1;
         cp->n_sources = 1;
@@ -2123,7 +2123,7 @@ static pa_card_profile *create_card_profile(struct userdata *u, pa_bluetooth_pro
         break;
 
     case PA_BLUETOOTH_PROFILE_HFP_HF:
-         cp = pa_card_profile_new(name, _("Handsfree Head Unit (HFP)"), sizeof(pa_bluetooth_profile_t));
+         cp = pa_card_profile_new(name, ("Handsfree Head Unit (HFP)"), sizeof(pa_bluetooth_profile_t));
         cp->priority = 30;
         cp->n_sinks = 1;
         cp->n_sources = 1;
@@ -2136,7 +2136,7 @@ static pa_card_profile *create_card_profile(struct userdata *u, pa_bluetooth_pro
         break;
 
     case PA_BLUETOOTH_PROFILE_HFP_AG:
-        cp = pa_card_profile_new(name, _("Handsfree Audio Gateway (HFP)"), sizeof(pa_bluetooth_profile_t));
+        cp = pa_card_profile_new(name, ("Handsfree Audio Gateway (HFP)"), sizeof(pa_bluetooth_profile_t));
         cp->priority = 10;
         cp->n_sinks = 1;
         cp->n_sources = 1;
@@ -2294,7 +2294,7 @@ static int add_card(struct userdata *u) {
 
     pa_assert(!pa_hashmap_isempty(data.profiles));
 
-    cp = pa_card_profile_new("off", _("Off"), sizeof(pa_bluetooth_profile_t));
+    cp = pa_card_profile_new("off", ("Off"), sizeof(pa_bluetooth_profile_t));
     cp->available = PA_AVAILABLE_YES;
     p = PA_CARD_PROFILE_DATA(cp);
     *p = PA_BLUETOOTH_PROFILE_OFF;
